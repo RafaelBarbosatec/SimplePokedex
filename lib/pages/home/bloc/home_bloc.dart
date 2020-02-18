@@ -22,9 +22,12 @@ class HomeBloc extends BlocBase<HomeStreams> {
 
   void _loadPokemons() async {
     streams.progress.set(true);
-    List<Pokemon> pokemons = await _pokemonRepository.getPokemons();
-    List<PokemonType> pokemonTypes =
-        await _pokemonRepository.getPokemonsTypes();
+    List<Pokemon> pokemons = await _pokemonRepository
+        .getPokemons()
+        .catchError((error) => print(error));
+    List<PokemonType> pokemonTypes = await _pokemonRepository
+        .getPokemonsTypes()
+        .catchError((error) => print(error));
     streams.pokemons.set(pokemons);
     streams.pokemonsTypes.set(pokemonTypes);
     streams.progress.set(false);
