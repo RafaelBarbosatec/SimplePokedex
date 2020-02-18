@@ -33,8 +33,7 @@ class Con {
         print("[${DateTime.now().toString()}] GET($uri) <-- $response");
     } on DioError catch (e) {
       if (e.error is SocketException) {
-        throw new ResponseErrorException(
-            "Without Internet", e.response.statusCode);
+        throw new ResponseErrorException("Without Internet", 0);
       }
 
       int statusCode = e.response.statusCode;
@@ -65,8 +64,7 @@ class Con {
         print("[${DateTime.now().toString()}] POST($uri) <-- $response");
     } on DioError catch (e) {
       if (e.error is SocketException) {
-        throw new ResponseErrorException(
-            "Without Internet", e.response.statusCode);
+        throw new ResponseErrorException("Without Internet", 0);
       }
 
       int statusCode = e.response.statusCode;
@@ -98,8 +96,7 @@ class Con {
         print("[${DateTime.now().toString()}] PUT($uri) <-- $response");
     } on DioError catch (e) {
       if (e.error is SocketException) {
-        throw new ResponseErrorException(
-            "Without Internet", e.response.statusCode);
+        throw new ResponseErrorException("Without Internet", 0);
       }
 
       int statusCode = e.response.statusCode;
@@ -128,8 +125,7 @@ class Con {
         print("[${DateTime.now().toString()}] DELETE($uri) <-- $response");
     } on DioError catch (e) {
       if (e.error is SocketException) {
-        throw new ResponseErrorException(
-            "Without Internet", e.response.statusCode);
+        throw new ResponseErrorException("Without Internet", 0);
       }
 
       int statusCode = e.response.statusCode;
