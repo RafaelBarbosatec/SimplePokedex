@@ -10,5 +10,7 @@ class HomeStreams extends StreamsBase {
   @override
   void dispose() {
     progress.close();
+    pokemons.close();
+    pokemonsTypes.close();
   }
 }
