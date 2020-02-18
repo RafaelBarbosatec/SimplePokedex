@@ -26,6 +26,34 @@ class HomePage extends StatelessWidget {
     );
   }
 
+  Widget _buildContent(BlocCommunication<HomeStreams> communication) {
+    return Column(
+      children: <Widget>[
+        _buildTypes(communication.streams),
+        Expanded(
+          child: _buildPokemons(communication.streams),
+        )
+      ],
+    );
+  }
+
+  Widget _buildTypes(HomeStreams streams) {
+    return streams.pokemonsTypes.builder<List<PokemonType>>((types) {
+      return SizedBox(
+        height: 70,
+        child: ListView.builder(
+            itemCount: types.length,
+            scrollDirection: Axis.horizontal,
+            itemBuilder: (context, index) {
+              return Container(
+                  margin: EdgeInsets.all(10),
+                  height: 50,
+                  child: Image.network(types[index].image));
+            }),
+      );
+    });
+  }
+
   Widget _buildPokemons(HomeStreams streams) {
     return streams.pokemons.builder<List<Pokemon>>((pokemons) {
       return ListView.builder(
@@ -45,32 +73,6 @@ class HomePage extends StatelessWidget {
               child: CircularProgressIndicator(),
             )
           : SizedBox.shrink();
-    });
-  }
-
-  Widget _buildContent(BlocCommunication<HomeStreams> communication) {
-    return Column(
-      children: <Widget>[
-        _buildTypes(communication.streams),
-        Expanded(child: _buildPokemons(communication.streams))
-      ],
-    );
-  }
-
-  Widget _buildTypes(HomeStreams streams) {
-    return streams.pokemonsTypes.builder<List<PokemonType>>((types) {
-      return SizedBox(
-        height: 70,
-        child: ListView.builder(
-            itemCount: types.length,
-            scrollDirection: Axis.horizontal,
-            itemBuilder: (context, index) {
-              return Container(
-                  margin: EdgeInsets.all(10),
-                  height: 50,
-                  child: Image.network(types[index].image));
-            }),
-      );
     });
   }
 }
