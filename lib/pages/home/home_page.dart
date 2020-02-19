@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:simple_pokedex/pages/home/bloc/home_bloc.dart';
 import 'package:simple_pokedex/repository/pokemon/model/pokemon.dart';
 import 'package:simple_pokedex/repository/pokemon/model/pokemon_type.dart';
+import 'package:simple_pokedex/util/hex_color.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -39,16 +40,26 @@ class HomePage extends StatelessWidget {
 
   Widget _buildTypes(HomeStreams streams) {
     return streams.pokemonsTypes.builder<List<PokemonType>>((types) {
-      return SizedBox(
-        height: 70,
+      return Container(
+        height: 80,
         child: ListView.builder(
             itemCount: types.length,
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) {
-              return Container(
-                  margin: EdgeInsets.all(10),
+              return Center(
+                child: Container(
                   height: 50,
-                  child: Image.network(types[index].image));
+                  width: 50,
+                  margin: EdgeInsets.only(left: 10.0),
+                  child: Material(
+                    color: Colors.transparent,
+                    shadowColor: HexColor(types[index].color),
+                    borderRadius: BorderRadius.circular(25.0),
+                    elevation: 10,
+                    child: Image.network(types[index].image),
+                  ),
+                ),
+              );
             }),
       );
     });
