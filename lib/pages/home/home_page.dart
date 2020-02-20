@@ -10,6 +10,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: _buildBody(context),
     );
   }
@@ -68,7 +69,7 @@ class HomePage extends StatelessWidget {
               }),
           Container(
             height: 10,
-            decoration: BoxDecoration(color: Colors.grey[50], boxShadow: [
+            decoration: BoxDecoration(color: Colors.white, boxShadow: [
               BoxShadow(
                   blurRadius: 4,
                   offset: Offset(0.0, 5),
