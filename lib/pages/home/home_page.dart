@@ -10,27 +10,30 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
       body: _buildBody(context),
     );
   }
 
   Widget _buildBody(BuildContext context) {
-    return Bsev<HomeBloc, HomeStreams>(
-      builder: (context, communication) {
-        return Stack(
-          children: <Widget>[
-            _buildContent(communication),
-            _buildProgress(communication.streams)
-          ],
-        );
-      },
+    return SafeArea(
+      child: Bsev<HomeBloc, HomeStreams>(
+        builder: (context, communication) {
+          return Stack(
+            children: <Widget>[
+              _buildContent(context, communication),
+              _buildProgress(communication.streams)
+            ],
+          );
+        },
+      ),
     );
   }
 
-  Widget _buildContent(BlocCommunication<HomeStreams> communication) {
+  Widget _buildContent(
+      BuildContext context, BlocCommunication<HomeStreams> communication) {
     return Column(
       children: <Widget>[
+        ..._buildHeader(context),
         _buildTypes(communication),
         Expanded(
           child: _buildPokemons(communication.streams),
@@ -71,5 +74,45 @@ class HomePage extends StatelessWidget {
             )
           : SizedBox.shrink();
     });
+  }
+
+  List<Widget> _buildHeader(BuildContext context) {
+    return [
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Text(
+              'SimplePokedex',
+              style: Theme.of(context)
+                  .textTheme
+                  .title
+                  .copyWith(color: Colors.grey[700]),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Icon(Icons.build),
+          )
+        ],
+      ),
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: Container(
+          decoration: BoxDecoration(
+              color: Colors.grey[300], borderRadius: BorderRadius.circular(30)),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: TextField(
+              decoration: InputDecoration(
+                  border: InputBorder.none,
+                  focusedBorder: InputBorder.none,
+                  hintText: 'Search per name'),
+            ),
+          ),
+        ),
+      )
+    ];
   }
 }

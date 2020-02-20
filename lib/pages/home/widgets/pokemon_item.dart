@@ -10,8 +10,8 @@ class PokemonItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: EdgeInsets.all(10.0),
-      elevation: 4,
+      margin: EdgeInsets.symmetric(horizontal: 16) + EdgeInsets.only(top: 16),
+      elevation: 2,
       child: InkWell(
         onTap: onTap,
         child: _buildContent(context),
@@ -27,9 +27,10 @@ class PokemonItem extends StatelessWidget {
           Image.network(
             pokemon.thumbnailImage,
             height: 100,
+            width: 100,
           ),
           SizedBox(
-            width: 16,
+            width: 10,
           ),
           _buildName(context),
           Expanded(
@@ -68,6 +69,7 @@ class PokemonItem extends StatelessWidget {
         return TypeItem(
           type: type,
           selected: true,
+          size: 30,
         );
       }).toList(),
     );
