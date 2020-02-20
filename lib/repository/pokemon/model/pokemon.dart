@@ -1,3 +1,5 @@
+import 'package:simple_pokedex/repository/pokemon/model/pokemon_type.dart';
+
 class Pokemon {
   List<String> abilities;
   String detailPageURL;
@@ -14,6 +16,7 @@ class Pokemon {
   String thumbnailImage;
   int id;
   List<String> type;
+  List<PokemonType> typeObjects;
 
   Pokemon(
       {this.abilities,

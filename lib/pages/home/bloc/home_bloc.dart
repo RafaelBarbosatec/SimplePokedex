@@ -28,6 +28,10 @@ class HomeBloc extends BlocBase<HomeStreams> {
     List<PokemonType> pokemonTypes = await _pokemonRepository
         .getPokemonsTypes()
         .catchError((error) => print(error));
+    pokemons.forEach((p) {
+      p.typeObjects =
+          pokemonTypes.where((t) => p.type.contains(t.name)).toList();
+    });
     streams.pokemons.set(pokemons);
     streams.pokemonsTypes.set(pokemonTypes);
     streams.progress.set(false);

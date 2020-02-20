@@ -1,9 +1,10 @@
 import 'package:bsev/bsev.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_pokedex/pages/home/bloc/home_bloc.dart';
+import 'package:simple_pokedex/pages/home/widgets/pokemon_item.dart';
+import 'package:simple_pokedex/pages/home/widgets/pokemon_type_list.dart';
 import 'package:simple_pokedex/repository/pokemon/model/pokemon.dart';
 import 'package:simple_pokedex/repository/pokemon/model/pokemon_type.dart';
-import 'package:simple_pokedex/util/hex_color.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -30,7 +31,7 @@ class HomePage extends StatelessWidget {
   Widget _buildContent(BlocCommunication<HomeStreams> communication) {
     return Column(
       children: <Widget>[
-        _buildTypes(communication.streams),
+        _buildTypes(communication),
         Expanded(
           child: _buildPokemons(communication.streams),
         )
@@ -38,29 +39,14 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget _buildTypes(HomeStreams streams) {
-    return streams.pokemonsTypes.builder<List<PokemonType>>((types) {
-      return Container(
-        height: 80,
-        child: ListView.builder(
-            itemCount: types.length,
-            scrollDirection: Axis.horizontal,
-            itemBuilder: (context, index) {
-              return Center(
-                child: Container(
-                  height: 50,
-                  width: 50,
-                  margin: EdgeInsets.only(left: 10.0),
-                  child: Material(
-                    color: Colors.transparent,
-                    shadowColor: HexColor(types[index].color),
-                    borderRadius: BorderRadius.circular(25.0),
-                    elevation: 10,
-                    child: Image.network(types[index].image),
-                  ),
-                ),
-              );
-            }),
+  Widget _buildTypes(BlocCommunication<HomeStreams> communication) {
+    return communication.streams.pokemonsTypes
+        .builder<List<PokemonType>>((types) {
+      return PokemonTypeList(
+        types: types,
+        typeSelected: (type) {
+          print(type);
+        },
       );
     });
   }
@@ -70,9 +56,9 @@ class HomePage extends StatelessWidget {
       return ListView.builder(
           itemCount: pokemons.length,
           itemBuilder: (context, index) {
-            return Container(
-                height: 150,
-                child: Image.network(pokemons[index].thumbnailImage));
+            return PokemonItem(
+              pokemon: pokemons[index],
+            );
           });
     });
   }
