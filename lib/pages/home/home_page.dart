@@ -61,7 +61,7 @@ class HomePage extends StatelessWidget {
       return Stack(
         children: <Widget>[
           ListView.builder(
-              padding: EdgeInsets.only(top: 10),
+              padding: EdgeInsets.only(top: 10, bottom: 16),
               itemCount: pokemons.length,
               itemBuilder: (context, index) {
                 return PokemonItem(
