@@ -21,7 +21,7 @@ class TypeItem extends StatelessWidget {
         child: Container(
           height: size,
           width: size,
-          margin: EdgeInsets.only(left: 10.0),
+          margin: EdgeInsets.only(right: 16.0),
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(25.0),
               boxShadow: [

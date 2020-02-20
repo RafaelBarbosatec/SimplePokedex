@@ -56,13 +56,27 @@ class HomePage extends StatelessWidget {
 
   Widget _buildPokemons(HomeStreams streams) {
     return streams.pokemons.builder<List<Pokemon>>((pokemons) {
-      return ListView.builder(
-          itemCount: pokemons.length,
-          itemBuilder: (context, index) {
-            return PokemonItem(
-              pokemon: pokemons[index],
-            );
-          });
+      return Stack(
+        children: <Widget>[
+          ListView.builder(
+              padding: EdgeInsets.only(top: 10),
+              itemCount: pokemons.length,
+              itemBuilder: (context, index) {
+                return PokemonItem(
+                  pokemon: pokemons[index],
+                );
+              }),
+          Container(
+            height: 10,
+            decoration: BoxDecoration(color: Colors.grey[50], boxShadow: [
+              BoxShadow(
+                  blurRadius: 4,
+                  offset: Offset(0.0, 5),
+                  color: Colors.grey[300])
+            ]),
+          )
+        ],
+      );
     });
   }
 
@@ -97,6 +111,9 @@ class HomePage extends StatelessWidget {
           )
         ],
       ),
+      SizedBox(
+        height: 15,
+      ),
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Container(
@@ -112,7 +129,10 @@ class HomePage extends StatelessWidget {
             ),
           ),
         ),
-      )
+      ),
+      SizedBox(
+        height: 10,
+      ),
     ];
   }
 }

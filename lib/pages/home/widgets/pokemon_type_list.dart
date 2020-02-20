@@ -20,6 +20,7 @@ class _PokemonTypeListState extends State<PokemonTypeList> {
     return Container(
       height: 80,
       child: ListView.builder(
+          padding: EdgeInsets.only(left: 16),
           itemCount: widget.types.length,
           scrollDirection: Axis.horizontal,
           itemBuilder: (context, index) {
