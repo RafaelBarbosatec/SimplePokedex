@@ -28,10 +28,18 @@ class _PokemonTypeListState extends State<PokemonTypeList> {
               type: widget.types[index],
               selected: index == indexSelected,
               onTap: () {
-                if (widget.typeSelected != null)
-                  widget.typeSelected(widget.types[index]);
+                int cureentIndex = -1;
+
+                if (widget.typeSelected != null) {
+                  if (indexSelected == index) {
+                    widget.typeSelected(null);
+                  } else {
+                    cureentIndex = index;
+                    widget.typeSelected(widget.types[cureentIndex]);
+                  }
+                }
                 setState(() {
-                  indexSelected = index;
+                  indexSelected = cureentIndex;
                 });
               },
             );

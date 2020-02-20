@@ -18,20 +18,26 @@ class TypeItem extends StatelessWidget {
       child: AnimatedOpacity(
         duration: Duration(microseconds: 300),
         opacity: selected ? 1.0 : 0.4,
-        child: Container(
-          height: size,
-          width: size,
-          margin: EdgeInsets.only(right: 16.0),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(25.0),
-              boxShadow: [
-                if (selected)
-                  BoxShadow(
-                      blurRadius: 10,
-                      offset: Offset(size * 0.05, size * 0.05),
-                      color: HexColor(type.color))
-              ]),
-          child: InkWell(onTap: onTap, child: Image.network(type.image)),
+        child: Center(
+          child: Container(
+            height: size,
+            width: size,
+            margin: EdgeInsets.only(right: 16.0),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(25.0),
+                boxShadow: [
+                  if (selected)
+                    BoxShadow(
+                        blurRadius: 10,
+                        offset: Offset(size * 0.05, size * 0.05),
+                        color: HexColor(type.color))
+                ]),
+            child: FloatingActionButton(
+                elevation: 0,
+                backgroundColor: Colors.transparent,
+                onPressed: onTap,
+                child: Image.network(type.image)),
+          ),
         ),
       ),
     );

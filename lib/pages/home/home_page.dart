@@ -1,6 +1,7 @@
 import 'package:bsev/bsev.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_pokedex/pages/home/bloc/home_bloc.dart';
+import 'package:simple_pokedex/pages/home/bloc/home_events.dart';
 import 'package:simple_pokedex/pages/home/widgets/pokemon_item.dart';
 import 'package:simple_pokedex/pages/home/widgets/pokemon_type_list.dart';
 import 'package:simple_pokedex/repository/pokemon/model/pokemon.dart';
@@ -49,7 +50,7 @@ class HomePage extends StatelessWidget {
       return PokemonTypeList(
         types: types,
         typeSelected: (type) {
-          print(type);
+          communication.dispatcher(SelectType(type));
         },
       );
     });
