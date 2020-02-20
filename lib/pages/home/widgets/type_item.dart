@@ -17,7 +17,7 @@ class TypeItem extends StatelessWidget {
     return Center(
       child: AnimatedOpacity(
         duration: Duration(microseconds: 300),
-        opacity: selected ? 1.0 : 0.5,
+        opacity: selected ? 1.0 : 0.4,
         child: Container(
           height: size,
           width: size,
