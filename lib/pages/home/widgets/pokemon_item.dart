@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_pokedex/pages/home/widgets/type_item.dart';
 import 'package:simple_pokedex/repository/pokemon/model/pokemon.dart';
@@ -21,13 +22,21 @@ class PokemonItem extends StatelessWidget {
 
   Widget _buildContent(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 10),
+      padding: const EdgeInsets.symmetric(horizontal: 5),
       child: Row(
         children: <Widget>[
-          Image.network(
-            pokemon.thumbnailImage,
-            height: 100,
+          Container(
             width: 100,
+            height: 100,
+            child: CachedNetworkImage(
+              imageUrl: pokemon.thumbnailImage,
+              placeholder: (context, url) => Padding(
+                padding: EdgeInsets.all(20),
+                child: Image.asset(
+                  'assets/simbol_pokemon.png',
+                ),
+              ),
+            ),
           ),
           SizedBox(
             width: 10,
@@ -43,19 +52,23 @@ class PokemonItem extends StatelessWidget {
   }
 
   Widget _buildName(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
-        Text(
-          '#${pokemon.number}',
-          style: TextStyle(color: Colors.grey),
-        ),
-        Text(
-          pokemon.name,
-          style: TextStyle(fontSize: 20),
-        ),
-      ],
+    return Expanded(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Text(
+            '#${pokemon.number}',
+            style: TextStyle(color: Colors.grey),
+          ),
+          Text(
+            pokemon.name,
+            style: TextStyle(
+              fontSize: 18,
+            ),
+          ),
+        ],
+      ),
     );
   }
 

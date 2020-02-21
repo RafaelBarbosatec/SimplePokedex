@@ -2,6 +2,7 @@ import 'package:bsev/bsev.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_pokedex/pages/home/bloc/home_bloc.dart';
 import 'package:simple_pokedex/pages/home/bloc/home_events.dart';
+import 'package:simple_pokedex/pages/home/widgets/pokemon_empty.dart';
 import 'package:simple_pokedex/pages/home/widgets/pokemon_item.dart';
 import 'package:simple_pokedex/pages/home/widgets/pokemon_type_list.dart';
 import 'package:simple_pokedex/repository/pokemon/model/pokemon.dart';
@@ -11,6 +12,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
       backgroundColor: Colors.white,
       body: _buildBody(context),
     );
@@ -80,7 +82,8 @@ class HomePage extends StatelessWidget {
                   offset: Offset(0.0, 5),
                   color: Colors.grey[300])
             ]),
-          )
+          ),
+          _buildEmpty(communication),
         ],
       );
     });
@@ -148,5 +151,15 @@ class HomePage extends StatelessWidget {
         height: 10,
       ),
     ];
+  }
+
+  Widget _buildEmpty(BlocCommunication<HomeStreams> communication) {
+    return communication.streams.showEmpty.builder<bool>((show) {
+      if (show) {
+        return PokemonEmpty();
+      } else {
+        return SizedBox.shrink();
+      }
+    });
   }
 }

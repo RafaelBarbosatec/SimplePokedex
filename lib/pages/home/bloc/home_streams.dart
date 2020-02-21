@@ -4,6 +4,7 @@ import 'package:simple_pokedex/repository/pokemon/model/pokemon_type.dart';
 
 class HomeStreams extends StreamsBase {
   var progress = BehaviorSubjectCreate<bool>(initValue: false);
+  var showEmpty = BehaviorSubjectCreate<bool>(initValue: false);
   var pokemons = BehaviorSubjectCreate<List<Pokemon>>();
   var pokemonsTypes = BehaviorSubjectCreate<List<PokemonType>>();
 
@@ -12,5 +13,6 @@ class HomeStreams extends StreamsBase {
     progress.close();
     pokemons.close();
     pokemonsTypes.close();
+    showEmpty.close();
   }
 }

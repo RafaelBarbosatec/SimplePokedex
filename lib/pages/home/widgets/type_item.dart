@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_pokedex/repository/pokemon/model/pokemon_type.dart';
 import 'package:simple_pokedex/util/hex_color.dart';
@@ -36,7 +37,13 @@ class TypeItem extends StatelessWidget {
                 elevation: 0,
                 backgroundColor: Colors.transparent,
                 onPressed: onTap,
-                child: Image.network(type.image)),
+                child: CachedNetworkImage(
+                  imageUrl: type.image,
+                  placeholder: (context, url) => Padding(
+                    padding: EdgeInsets.all(4),
+                    child: Image.asset('assets/simbol_pokemon.png'),
+                  ),
+                )),
           ),
         ),
       ),

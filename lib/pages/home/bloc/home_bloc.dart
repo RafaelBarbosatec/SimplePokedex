@@ -85,6 +85,7 @@ class HomeBloc extends BlocBase<HomeStreams> {
 
     loadMore ? page++ : page = 0;
 
+    streams.showEmpty.set(false);
     streams.progress.set(true);
     List<Pokemon> pokeAux = await _pokemonRepository
         .getPokemons(page: page, name: name, type: type, limit: LIMIT)
@@ -96,6 +97,9 @@ class HomeBloc extends BlocBase<HomeStreams> {
       pokemons.addAll(pokeAux);
     } else {
       pokemons = pokeAux;
+      if (pokemons.isEmpty) {
+        streams.showEmpty.set(true);
+      }
     }
 
     pokemons.forEach((p) {
