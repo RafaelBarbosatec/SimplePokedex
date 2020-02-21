@@ -98,7 +98,7 @@ class HomePage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.only(left: 16.0, top: 20),
             child: Text(
               'SimplePokedex',
               style: Theme.of(context)
@@ -108,13 +108,17 @@ class HomePage extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Icon(Icons.build),
+            padding: const EdgeInsets.only(right: 16.0, top: 20),
+            child: Image.asset(
+              'assets/pokebola_img.png',
+              height: 30,
+              width: 30,
+            ),
           )
         ],
       ),
       SizedBox(
-        height: 15,
+        height: 25,
       ),
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
