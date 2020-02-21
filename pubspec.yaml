@@ -20,7 +20,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  bsev: ^1.0.0
+  bsev: ^1.0.1
   dio: ^3.0.8
 
 dev_dependencies:
