@@ -6,3 +6,15 @@ class SelectType extends EventsBase {
 
   SelectType(this.type);
 }
+
+class SearchName extends EventsBase {
+  final String name;
+
+  SearchName(this.name);
+}
+
+class LoadPokemons extends EventsBase {
+  final bool isMore;
+
+  LoadPokemons(this.isMore);
+}

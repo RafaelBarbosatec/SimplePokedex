@@ -35,10 +35,10 @@ class HomePage extends StatelessWidget {
       BuildContext context, BlocCommunication<HomeStreams> communication) {
     return Column(
       children: <Widget>[
-        ..._buildHeader(context),
+        ..._buildHeader(context, communication),
         _buildTypes(communication),
         Expanded(
-          child: _buildPokemons(communication.streams),
+          child: _buildPokemons(communication),
         )
       ],
     );
@@ -56,14 +56,18 @@ class HomePage extends StatelessWidget {
     });
   }
 
-  Widget _buildPokemons(HomeStreams streams) {
-    return streams.pokemons.builder<List<Pokemon>>((pokemons) {
+  Widget _buildPokemons(BlocCommunication<HomeStreams> communication) {
+    return communication.streams.pokemons.builder<List<Pokemon>>((pokemons) {
       return Stack(
         children: <Widget>[
           ListView.builder(
               padding: EdgeInsets.only(top: 10, bottom: 16),
               itemCount: pokemons.length,
               itemBuilder: (context, index) {
+                if (index == pokemons.length - 3) {
+                  communication.dispatcher(LoadPokemons(true));
+                }
+
                 return PokemonItem(
                   pokemon: pokemons[index],
                 );
@@ -92,7 +96,8 @@ class HomePage extends StatelessWidget {
     });
   }
 
-  List<Widget> _buildHeader(BuildContext context) {
+  List<Widget> _buildHeader(
+      BuildContext context, BlocCommunication<HomeStreams> communication) {
     return [
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -124,6 +129,9 @@ class HomePage extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: TextField(
+              onSubmitted: (name) {
+                communication.dispatcher(SearchName(name));
+              },
               decoration: InputDecoration(
                   border: InputBorder.none,
                   focusedBorder: InputBorder.none,
