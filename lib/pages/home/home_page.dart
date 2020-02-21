@@ -129,7 +129,7 @@ class HomePage extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: TextField(
-              onSubmitted: (name) {
+              onChanged: (name) {
                 communication.dispatcher(SearchName(name));
               },
               decoration: InputDecoration(

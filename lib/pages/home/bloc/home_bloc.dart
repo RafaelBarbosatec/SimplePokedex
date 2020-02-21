@@ -1,4 +1,5 @@
 import 'package:bsev/bloc_base.dart';
+import 'package:bsev/bsev.dart';
 import 'package:bsev/events_base.dart';
 import 'package:simple_pokedex/pages/home/bloc/home_events.dart';
 import 'package:simple_pokedex/pages/home/bloc/home_streams.dart';
@@ -19,8 +20,13 @@ class HomeBloc extends BlocBase<HomeStreams> {
   String type;
 
   bool canLoadMore = true;
+  final _queryDebounce = BehaviorSubject<String>();
 
-  HomeBloc(this._pokemonRepository);
+  HomeBloc(this._pokemonRepository) {
+    _queryDebounce
+        .debounceTime(Duration(milliseconds: 600))
+        .listen(_mapSearchName);
+  }
 
   @override
   void eventReceiver(EventsBase event) {
@@ -29,7 +35,7 @@ class HomeBloc extends BlocBase<HomeStreams> {
     }
 
     if (event is SearchName) {
-      _mapSearchName(event.name);
+      _queryDebounce.add(event.name);
     }
 
     if (event is LoadPokemons) {
@@ -108,5 +114,11 @@ class HomeBloc extends BlocBase<HomeStreams> {
       this.name = name;
     }
     loadPokemons();
+  }
+
+  @override
+  void dispose() {
+    _queryDebounce.close();
+    super.dispose();
   }
 }
