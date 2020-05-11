@@ -75,13 +75,9 @@ class HomeBloc extends BlocBase<HomeStreams> {
   }
 
   void loadPokemons({bool loadMore = false}) async {
-    if (streams.progress.value) {
-      return;
-    }
+    if (streams.progress.value) return;
 
-    if (loadMore && !canLoadMore) {
-      return;
-    }
+    if (loadMore && !canLoadMore) return;
 
     loadMore ? page++ : page = 0;
 
@@ -97,9 +93,7 @@ class HomeBloc extends BlocBase<HomeStreams> {
       pokemons.addAll(pokeAux);
     } else {
       pokemons = pokeAux;
-      if (pokemons.isEmpty) {
-        streams.showEmpty.set(true);
-      }
+      streams.showEmpty.set(pokemons.isEmpty);
     }
 
     pokemons.forEach((p) {

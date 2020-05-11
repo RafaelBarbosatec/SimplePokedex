@@ -42,9 +42,6 @@ class PokemonItem extends StatelessWidget {
             width: 10,
           ),
           _buildName(context),
-          Expanded(
-            child: Container(),
-          ),
           _buildTypes(context)
         ],
       ),
