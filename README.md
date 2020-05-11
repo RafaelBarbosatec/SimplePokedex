@@ -1,16 +1,18 @@
-# simple_pokedex
+# SimplePokedex
 
-A new Flutter application.
+<p align="center">
+  <img src="https://github.com/RafaelBarbosatec/SimplePokedex/blob/master/media/print_1.jpg" width="200"/>
+  <img src="https://github.com/RafaelBarbosatec/SimplePokedex/blob/master/media/print_2.jpg" width="200"/>
+  <img src="https://github.com/RafaelBarbosatec/SimplePokedex/blob/master/media/print_3.jpg" width="200"/>
+</p>
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
+## Resources
 
-A few resources to get you started if this is your first Flutter project:
+Packages | pub
+--------- | ------
+dio    | [![Pub](https://img.shields.io/pub/v/dio.svg)](https://pub.dartlang.org/packages/dio)
+bsev  | [![Pub](https://img.shields.io/pub/v/bsev.svg)](https://pub.dartlang.org/packages/bsev)
+cached_network_image  | [![Pub](https://img.shields.io/pub/v/cached_network_image.svg)](https://pub.dartlang.org/packages/cached_network_image)
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
