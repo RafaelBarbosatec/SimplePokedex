@@ -66,11 +66,7 @@ class HomeBloc extends BlocBase<HomeStreams> {
   }
 
   void _mapSelectType(PokemonType type) {
-    if (type == null) {
-      this.type = null;
-    } else {
-      this.type = type.name;
-    }
+    this.type = type != null ? type.name : null;
     loadPokemons();
   }
 
@@ -106,11 +102,7 @@ class HomeBloc extends BlocBase<HomeStreams> {
   }
 
   void _mapSearchName(String name) {
-    if (name.isEmpty) {
-      this.name = null;
-    } else {
-      this.name = name;
-    }
+    this.name = name.isEmpty ? null : name;
     loadPokemons();
   }
 
