@@ -2,6 +2,7 @@ import 'package:bsev/bsev.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_pokedex/pages/home/bloc/home_bloc.dart';
 import 'package:simple_pokedex/pages/home/bloc/home_events.dart';
+import 'package:simple_pokedex/pages/home/widgets/header.dart';
 import 'package:simple_pokedex/pages/home/widgets/pokemon_empty.dart';
 import 'package:simple_pokedex/pages/home/widgets/pokemon_item.dart';
 import 'package:simple_pokedex/pages/home/widgets/pokemon_type_list.dart';
@@ -14,21 +15,17 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       backgroundColor: Colors.white,
-      body: _buildBody(context),
-    );
-  }
-
-  Widget _buildBody(BuildContext context) {
-    return SafeArea(
-      child: Bsev<HomeBloc, HomeStreams>(
-        builder: (context, communication) {
-          return Stack(
-            children: <Widget>[
-              _buildContent(context, communication),
-              _buildProgress(communication.streams)
-            ],
-          );
-        },
+      body: SafeArea(
+        child: Bsev<HomeBloc, HomeStreams>(
+          builder: (context, communication) {
+            return Stack(
+              children: <Widget>[
+                _buildContent(context, communication),
+                _buildProgress(communication.streams)
+              ],
+            );
+          },
+        ),
       ),
     );
   }
@@ -37,7 +34,10 @@ class HomePage extends StatelessWidget {
       BuildContext context, BlocCommunication<HomeStreams> communication) {
     return Column(
       children: <Widget>[
-        ..._buildHeader(context, communication),
+        Header(communication: communication),
+        SizedBox(
+          height: 10,
+        ),
         _buildTypes(communication),
         Expanded(
           child: _buildPokemons(communication),
@@ -99,67 +99,9 @@ class HomePage extends StatelessWidget {
     });
   }
 
-  List<Widget> _buildHeader(
-      BuildContext context, BlocCommunication<HomeStreams> communication) {
-    return [
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.only(left: 16.0, top: 20),
-            child: Text(
-              'SimplePokedex',
-              style: Theme.of(context)
-                  .textTheme
-                  .title
-                  .copyWith(color: Colors.grey[700]),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(right: 16.0, top: 20),
-            child: Image.asset(
-              'assets/pokebola_img.png',
-              height: 30,
-              width: 30,
-            ),
-          )
-        ],
-      ),
-      SizedBox(
-        height: 25,
-      ),
-      Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Container(
-          decoration: BoxDecoration(
-              color: Colors.grey[300], borderRadius: BorderRadius.circular(30)),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: TextField(
-              onChanged: (name) {
-                communication.dispatcher(SearchName(name));
-              },
-              decoration: InputDecoration(
-                  border: InputBorder.none,
-                  focusedBorder: InputBorder.none,
-                  hintText: 'Search per name'),
-            ),
-          ),
-        ),
-      ),
-      SizedBox(
-        height: 10,
-      ),
-    ];
-  }
-
   Widget _buildEmpty(BlocCommunication<HomeStreams> communication) {
     return communication.streams.showEmpty.builder<bool>((show) {
-      if (show) {
-        return PokemonEmpty();
-      } else {
-        return SizedBox.shrink();
-      }
+      return show ? PokemonEmpty() : SizedBox.shrink();
     });
   }
 }

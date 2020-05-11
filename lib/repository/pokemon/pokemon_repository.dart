@@ -11,15 +11,9 @@ class PokemonRepository {
       {int page = 0, int limit, String name, String type}) {
     Map<String, dynamic> params = Map();
     params['page'] = page;
-    if (limit != null) {
-      params['limit'] = limit;
-    }
-    if (name != null) {
-      params['name'] = name;
-    }
-    if (type != null) {
-      params['type'] = type;
-    }
+    if (limit != null) params['limit'] = limit;
+    if (name != null) params['name'] = name;
+    if (type != null) params['type'] = type;
 
     return _con.get('pokemon', queryParameters: params).then((response) =>
         response['data']
