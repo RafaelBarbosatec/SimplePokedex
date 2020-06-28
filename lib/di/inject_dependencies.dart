@@ -10,10 +10,12 @@ void injectDependencies() {
 
 void injectBloCs() {
   registerBloc<HomeBloc, HomeStreams>(
-      (i) => HomeBloc(i.getDependency()), () => HomeStreams());
+    (i) => HomeBloc(i.get()),
+    () => HomeStreams(),
+  );
 }
 
 void injectUtils() {
-  registerSingleton((i) => Con('http://104.131.18.84/', debug: true));
-  registerSingleton((i) => PokemonRepository(i.getDependency()));
+  registerSingletonDependency((i) => Con('http://104.131.18.84/', debug: true));
+  registerSingletonDependency((i) => PokemonRepository(i.get()));
 }

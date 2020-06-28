@@ -51,10 +51,10 @@ class HomeBloc extends BlocBase<HomeStreams> {
   void _loadPokemonsAndTypes() async {
     streams.progress.set(true);
     pokemons = await _pokemonRepository
-        .getPokemons()
+        .getPokemonList()
         .catchError((error) => print(error));
     pokemonTypes = await _pokemonRepository
-        .getPokemonsTypes()
+        .getPokemonTypes()
         .catchError((error) => print(error));
     pokemons.forEach((p) {
       p.typeObjects =
@@ -80,7 +80,7 @@ class HomeBloc extends BlocBase<HomeStreams> {
     streams.showEmpty.set(false);
     streams.progress.set(true);
     List<Pokemon> pokeAux = await _pokemonRepository
-        .getPokemons(page: page, name: name, type: type, limit: LIMIT)
+        .getPokemonList(page: page, name: name, type: type, limit: LIMIT)
         .catchError((error) => print(error));
 
     canLoadMore = pokeAux.length == LIMIT;

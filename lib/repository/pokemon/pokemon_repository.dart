@@ -7,7 +7,7 @@ class PokemonRepository {
 
   PokemonRepository(this._con);
 
-  Future<List<Pokemon>> getPokemons(
+  Future<List<Pokemon>> getPokemonList(
       {int page = 0, int limit, String name, String type}) {
     Map<String, dynamic> params = Map();
     params['page'] = page;
@@ -21,7 +21,7 @@ class PokemonRepository {
             .toList());
   }
 
-  Future<List<PokemonType>> getPokemonsTypes() {
+  Future<List<PokemonType>> getPokemonTypes() {
     return _con.get('pokemon/types').then((response) => response['data']
         .map<PokemonType>((item) => PokemonType.fromJson(item))
         .toList());
