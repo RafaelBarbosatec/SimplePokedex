@@ -40,7 +40,7 @@ class HomePage extends StatelessWidget {
         ),
         _buildTypes(communication),
         Expanded(
-          child: _buildPokemons(communication),
+          child: _buildPokemonList(communication),
         )
       ],
     );
@@ -58,20 +58,20 @@ class HomePage extends StatelessWidget {
     });
   }
 
-  Widget _buildPokemons(BlocCommunication<HomeStreams> communication) {
-    return communication.streams.pokemons.builder<List<Pokemon>>((pokemons) {
+  Widget _buildPokemonList(BlocCommunication<HomeStreams> communication) {
+    return communication.streams.pokemons.builder<List<Pokemon>>((list) {
       return Stack(
         children: <Widget>[
           ListView.builder(
               padding: EdgeInsets.only(top: 10, bottom: 16),
-              itemCount: pokemons.length,
+              itemCount: list.length,
               itemBuilder: (context, index) {
-                if (index == pokemons.length - 3) {
+                if (index == list.length - 3) {
                   communication.dispatcher(LoadPokemons(true));
                 }
 
                 return PokemonItem(
-                  pokemon: pokemons[index],
+                  pokemon: list[index],
                 );
               }),
           Container(
@@ -83,14 +83,14 @@ class HomePage extends StatelessWidget {
                   color: Colors.grey[300])
             ]),
           ),
-          _buildEmpty(communication),
+          _buildEmpty(communication.streams),
         ],
       );
     });
   }
 
   Widget _buildProgress(HomeStreams streams) {
-    return streams.progress.builder((show) {
+    return streams.progress.builder<bool>((show) {
       return show
           ? Center(
               child: CircularProgressIndicator(),
@@ -99,8 +99,8 @@ class HomePage extends StatelessWidget {
     });
   }
 
-  Widget _buildEmpty(BlocCommunication<HomeStreams> communication) {
-    return communication.streams.showEmpty.builder<bool>((show) {
+  Widget _buildEmpty(HomeStreams streams) {
+    return streams.showEmpty.builder<bool>((show) {
       return show ? PokemonEmpty() : SizedBox.shrink();
     });
   }
