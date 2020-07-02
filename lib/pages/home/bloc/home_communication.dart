@@ -2,7 +2,8 @@ import 'package:bsev/bsev.dart';
 import 'package:simple_pokedex/repository/pokemon/model/pokemon.dart';
 import 'package:simple_pokedex/repository/pokemon/model/pokemon_type.dart';
 
-class HomeStreams extends StreamsBase {
+class HomeCommunication extends CommunicationBase {
+  final queryDebounce = BehaviorSubjectCreate<String>();
   var progress = BehaviorSubjectCreate<bool>(initValue: false);
   var showEmpty = BehaviorSubjectCreate<bool>(initValue: false);
   var pokemons = BehaviorSubjectCreate<List<Pokemon>>();
@@ -14,5 +15,7 @@ class HomeStreams extends StreamsBase {
     pokemons.close();
     pokemonsTypes.close();
     showEmpty.close();
+    queryDebounce.close();
+    super.dispose();
   }
 }

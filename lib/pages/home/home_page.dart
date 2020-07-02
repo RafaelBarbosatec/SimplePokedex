@@ -16,12 +16,12 @@ class HomePage extends StatelessWidget {
       resizeToAvoidBottomPadding: false,
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: Bsev<HomeBloc, HomeStreams>(
+        child: Bsev<HomeBloc, HomeCommunication>(
           builder: (context, communication) {
             return Stack(
               children: <Widget>[
                 _buildContent(context, communication),
-                _buildProgress(communication.streams)
+                _buildProgress(communication)
               ],
             );
           },
@@ -30,8 +30,7 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget _buildContent(
-      BuildContext context, BlocCommunication<HomeStreams> communication) {
+  Widget _buildContent(BuildContext context, HomeCommunication communication) {
     return Column(
       children: <Widget>[
         Header(communication: communication),
@@ -46,9 +45,8 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget _buildTypes(BlocCommunication<HomeStreams> communication) {
-    return communication.streams.pokemonsTypes
-        .builder<List<PokemonType>>((types) {
+  Widget _buildTypes(HomeCommunication communication) {
+    return communication.pokemonsTypes.builder<List<PokemonType>>((types) {
       return PokemonTypeList(
         types: types,
         typeSelected: (type) {
@@ -58,8 +56,8 @@ class HomePage extends StatelessWidget {
     });
   }
 
-  Widget _buildPokemonList(BlocCommunication<HomeStreams> communication) {
-    return communication.streams.pokemons.builder<List<Pokemon>>((list) {
+  Widget _buildPokemonList(HomeCommunication communication) {
+    return communication.pokemons.builder<List<Pokemon>>((list) {
       return Stack(
         children: <Widget>[
           ListView.builder(
@@ -83,13 +81,13 @@ class HomePage extends StatelessWidget {
                   color: Colors.grey[300])
             ]),
           ),
-          _buildEmpty(communication.streams),
+          _buildEmpty(communication),
         ],
       );
     });
   }
 
-  Widget _buildProgress(HomeStreams streams) {
+  Widget _buildProgress(HomeCommunication streams) {
     return streams.progress.builder<bool>((show) {
       return show
           ? Center(
@@ -99,7 +97,7 @@ class HomePage extends StatelessWidget {
     });
   }
 
-  Widget _buildEmpty(HomeStreams streams) {
+  Widget _buildEmpty(HomeCommunication streams) {
     return streams.showEmpty.builder<bool>((show) {
       return show ? PokemonEmpty() : SizedBox.shrink();
     });

@@ -9,9 +9,9 @@ void injectDependencies() {
 }
 
 void injectBloCs() {
-  registerBloc<HomeBloc, HomeStreams>(
+  registerBloc<HomeBloc, HomeCommunication>(
     (i) => HomeBloc(i.get()),
-    () => HomeStreams(),
+    () => HomeCommunication(),
   );
 }
 

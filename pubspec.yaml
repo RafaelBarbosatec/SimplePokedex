@@ -20,7 +20,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  bsev: ^1.0.3
+  bsev: ^2.0.0
   dio: ^3.0.9
   cached_network_image: ^2.0.0
 

@@ -1,15 +1,15 @@
 import 'package:bsev/bloc_base.dart';
 import 'package:bsev/bsev.dart';
 import 'package:bsev/events_base.dart';
+import 'package:simple_pokedex/pages/home/bloc/home_communication.dart';
 import 'package:simple_pokedex/pages/home/bloc/home_events.dart';
-import 'package:simple_pokedex/pages/home/bloc/home_streams.dart';
 import 'package:simple_pokedex/repository/pokemon/model/pokemon.dart';
 import 'package:simple_pokedex/repository/pokemon/model/pokemon_type.dart';
 import 'package:simple_pokedex/repository/pokemon/pokemon_repository.dart';
 
-export 'package:simple_pokedex/pages/home/bloc/home_streams.dart';
+export 'package:simple_pokedex/pages/home/bloc/home_communication.dart';
 
-class HomeBloc extends BlocBase<HomeStreams> {
+class HomeBloc extends BlocBase<HomeCommunication> {
   final PokemonRepository _pokemonRepository;
 
   List<Pokemon> pokemons;
@@ -20,13 +20,8 @@ class HomeBloc extends BlocBase<HomeStreams> {
   String type;
 
   bool canLoadMore = true;
-  final _queryDebounce = BehaviorSubject<String>();
 
-  HomeBloc(this._pokemonRepository) {
-    _queryDebounce
-        .debounceTime(Duration(milliseconds: 600))
-        .listen(_mapSearchName);
-  }
+  HomeBloc(this._pokemonRepository);
 
   @override
   void eventReceiver(EventsBase event) {
@@ -35,7 +30,7 @@ class HomeBloc extends BlocBase<HomeStreams> {
     }
 
     if (event is SearchName) {
-      _queryDebounce.add(event.name);
+      communication.queryDebounce.set(event.name);
     }
 
     if (event is LoadPokemons) {
@@ -45,11 +40,14 @@ class HomeBloc extends BlocBase<HomeStreams> {
 
   @override
   void initView() {
+    communication.queryDebounce.subject
+        .debounceTime(Duration(milliseconds: 600))
+        .listen(_mapSearchName);
     _loadPokemonsAndTypes();
   }
 
   void _loadPokemonsAndTypes() async {
-    streams.progress.set(true);
+    communication.progress.set(true);
     pokemons = await _pokemonRepository
         .getPokemonList()
         .catchError((error) => print(error));
@@ -60,9 +58,9 @@ class HomeBloc extends BlocBase<HomeStreams> {
       p.typeObjects =
           pokemonTypes.where((t) => p.type.contains(t.name)).toList();
     });
-    streams.pokemons.set(pokemons);
-    streams.pokemonsTypes.set(pokemonTypes);
-    streams.progress.set(false);
+    communication.pokemons.set(pokemons);
+    communication.pokemonsTypes.set(pokemonTypes);
+    communication.progress.set(false);
   }
 
   void _mapSelectType(PokemonType type) {
@@ -71,14 +69,14 @@ class HomeBloc extends BlocBase<HomeStreams> {
   }
 
   void loadPokemons({bool loadMore = false}) async {
-    if (streams.progress.value) return;
+    if (communication.progress.value) return;
 
     if (loadMore && !canLoadMore) return;
 
     loadMore ? page++ : page = 0;
 
-    streams.showEmpty.set(false);
-    streams.progress.set(true);
+    communication.showEmpty.set(false);
+    communication.progress.set(true);
     List<Pokemon> pokeAux = await _pokemonRepository
         .getPokemonList(page: page, name: name, type: type, limit: LIMIT)
         .catchError((error) => print(error));
@@ -89,7 +87,7 @@ class HomeBloc extends BlocBase<HomeStreams> {
       pokemons.addAll(pokeAux);
     } else {
       pokemons = pokeAux;
-      streams.showEmpty.set(pokemons.isEmpty);
+      communication.showEmpty.set(pokemons.isEmpty);
     }
 
     pokemons.forEach((p) {
@@ -97,18 +95,12 @@ class HomeBloc extends BlocBase<HomeStreams> {
           pokemonTypes.where((t) => p.type.contains(t.name)).toList();
     });
 
-    streams.pokemons.set(pokemons);
-    streams.progress.set(false);
+    communication.pokemons.set(pokemons);
+    communication.progress.set(false);
   }
 
   void _mapSearchName(String name) {
     this.name = name.isEmpty ? null : name;
     loadPokemons();
-  }
-
-  @override
-  void dispose() {
-    _queryDebounce.close();
-    super.dispose();
   }
 }

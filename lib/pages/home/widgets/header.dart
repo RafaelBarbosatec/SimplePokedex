@@ -1,10 +1,9 @@
-import 'package:bsev/bloc_communication.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_pokedex/pages/home/bloc/home_bloc.dart';
 import 'package:simple_pokedex/pages/home/bloc/home_events.dart';
 
 class Header extends StatelessWidget {
-  final BlocCommunication<HomeStreams> communication;
+  final HomeCommunication communication;
 
   const Header({Key key, this.communication}) : super(key: key);
   @override
