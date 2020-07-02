@@ -25,6 +25,7 @@ class _PokemonTypeListState extends State<PokemonTypeList> {
           scrollDirection: Axis.horizontal,
           itemBuilder: (context, index) {
             return TypeItem(
+              margin: const EdgeInsets.only(right: 12),
               type: widget.types[index],
               selected: index == indexSelected,
               onTap: () {

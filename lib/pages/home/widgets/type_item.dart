@@ -8,42 +8,48 @@ class TypeItem extends StatelessWidget {
   final bool selected;
   final GestureTapCallback onTap;
   final double size;
+  final EdgeInsetsGeometry margin;
 
   const TypeItem(
-      {Key key, this.type, this.selected = false, this.onTap, this.size = 50})
+      {Key key,
+      this.type,
+      this.selected = false,
+      this.onTap,
+      this.size = 50,
+      this.margin})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: AnimatedOpacity(
-        duration: Duration(microseconds: 300),
-        opacity: selected ? 1.0 : 0.4,
-        child: Center(
-          child: Container(
-            height: size,
-            width: size,
-            margin: EdgeInsets.only(right: 16.0),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(25.0),
-                boxShadow: [
-                  if (selected)
-                    BoxShadow(
-                        blurRadius: 10,
-                        offset: Offset(size * 0.05, size * 0.05),
-                        color: HexColor(type.color))
-                ]),
-            child: FloatingActionButton(
-                elevation: 0,
-                backgroundColor: Colors.transparent,
-                onPressed: onTap,
-                child: CachedNetworkImage(
-                  imageUrl: type.image,
-                  placeholder: (context, url) => Padding(
-                    padding: EdgeInsets.all(4),
-                    child: Image.asset('assets/simbol_pokemon.png'),
-                  ),
-                )),
+    return AnimatedOpacity(
+      duration: Duration(microseconds: 300),
+      opacity: selected ? 1.0 : 0.4,
+      child: Center(
+        child: Container(
+          margin: margin,
+          height: size,
+          width: size,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(25.0),
+            boxShadow: [
+              if (selected)
+                BoxShadow(
+                  blurRadius: 10,
+                  offset: Offset(size * 0.05, size * 0.05),
+                  color: HexColor(type.color),
+                )
+            ],
+          ),
+          child: InkWell(
+            borderRadius: BorderRadius.circular(40),
+            onTap: onTap,
+            child: CachedNetworkImage(
+              imageUrl: type.image,
+              placeholder: (context, url) => Padding(
+                padding: EdgeInsets.all(4),
+                child: Image.asset('assets/simbol_pokemon.png'),
+              ),
+            ),
           ),
         ),
       ),

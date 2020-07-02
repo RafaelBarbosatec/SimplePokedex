@@ -28,12 +28,15 @@ class PokemonItem extends StatelessWidget {
           Container(
             width: 100,
             height: 100,
-            child: CachedNetworkImage(
-              imageUrl: pokemon.thumbnailImage,
-              placeholder: (context, url) => Padding(
-                padding: EdgeInsets.all(20),
-                child: Image.asset(
-                  'assets/simbol_pokemon.png',
+            child: Hero(
+              tag: pokemon.thumbnailImage,
+              child: CachedNetworkImage(
+                imageUrl: pokemon.thumbnailImage,
+                placeholder: (context, url) => Padding(
+                  padding: EdgeInsets.all(20),
+                  child: Image.asset(
+                    'assets/simbol_pokemon.png',
+                  ),
                 ),
               ),
             ),
@@ -77,6 +80,7 @@ class PokemonItem extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: pokemon.typeObjects.map<Widget>((type) {
         return TypeItem(
+          margin: const EdgeInsets.only(right: 12),
           type: type,
           selected: true,
           size: 30,

@@ -1,5 +1,6 @@
 import 'package:bsev/bsev.dart';
 import 'package:flutter/material.dart';
+import 'package:simple_pokedex/pages/detail/detail_page.dart';
 import 'package:simple_pokedex/pages/home/bloc/home_bloc.dart';
 import 'package:simple_pokedex/pages/home/bloc/home_events.dart';
 import 'package:simple_pokedex/pages/home/widgets/header.dart';
@@ -51,9 +52,19 @@ class HomePage extends StatelessWidget {
             if (index == list.length - 3) {
               communication.dispatcher(LoadPokemons(true));
             }
-
+            final pokemon = list[index];
             return PokemonItem(
-              pokemon: list[index],
+              pokemon: pokemon,
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => DetailPage(
+                      pokemon: pokemon,
+                    ),
+                  ),
+                );
+              },
             );
           },
         );
