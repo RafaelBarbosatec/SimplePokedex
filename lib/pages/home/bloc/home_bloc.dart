@@ -34,7 +34,7 @@ class HomeBloc extends BlocBase<HomeCommunication> {
     }
 
     if (event is LoadPokemons) {
-      loadPokemons(loadMore: event.isMore);
+      loadPokemonList(loadMore: event.isMore);
     }
   }
 
@@ -43,10 +43,10 @@ class HomeBloc extends BlocBase<HomeCommunication> {
     communication.queryDebounce.subject
         .debounceTime(Duration(milliseconds: 600))
         .listen(_mapSearchName);
-    _loadPokemonsAndTypes();
+    _loadPokemonListAndTypes();
   }
 
-  void _loadPokemonsAndTypes() async {
+  void _loadPokemonListAndTypes() async {
     communication.progress.set(true);
     pokemons = await _pokemonRepository
         .getPokemonList()
@@ -56,7 +56,7 @@ class HomeBloc extends BlocBase<HomeCommunication> {
         .catchError((error) => print(error));
     pokemons?.forEach((p) {
       p.typeObjects =
-          pokemonTypes.where((t) => p.type.contains(t.name)).toList();
+          pokemonTypes?.where((t) => p.type.contains(t.name))?.toList();
     });
     communication.pokemons.set(pokemons);
     communication.pokemonsTypes.set(pokemonTypes);
@@ -64,17 +64,18 @@ class HomeBloc extends BlocBase<HomeCommunication> {
   }
 
   void _mapSelectType(PokemonType type) {
-    this.type = type != null ? type.name : null;
-    loadPokemons();
+    this.type = type?.name;
+    loadPokemonList();
   }
 
-  void loadPokemons({bool loadMore = false}) async {
+  void loadPokemonList({bool loadMore = false}) async {
     if (communication.progress.value || (loadMore && !canLoadMore)) return;
 
     loadMore ? page++ : page = 0;
 
     communication.showEmpty.set(false);
     communication.progress.set(true);
+
     List<Pokemon> pokeAux = await _pokemonRepository
         .getPokemonList(page: page, name: name, type: type, limit: LIMIT)
         .catchError((error) => print(error));
@@ -101,6 +102,6 @@ class HomeBloc extends BlocBase<HomeCommunication> {
 
   void _mapSearchName(String name) {
     this.name = (name?.isEmpty ?? true) ? null : name;
-    loadPokemons();
+    loadPokemonList();
   }
 }
