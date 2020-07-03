@@ -21,33 +21,36 @@ class TypeItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedOpacity(
-      duration: Duration(microseconds: 300),
-      opacity: selected ? 1.0 : 0.4,
-      child: Center(
-        child: Container(
-          margin: margin,
-          height: size,
-          width: size,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(25.0),
-            boxShadow: [
-              if (selected)
-                BoxShadow(
-                  blurRadius: 10,
-                  offset: Offset(size * 0.05, size * 0.05),
-                  color: HexColor(type.color),
-                )
-            ],
-          ),
-          child: InkWell(
-            borderRadius: BorderRadius.circular(40),
-            onTap: onTap,
-            child: CachedNetworkImage(
-              imageUrl: type.image,
-              placeholder: (context, url) => Padding(
-                padding: EdgeInsets.all(4),
-                child: Image.asset('assets/simbol_pokemon.png'),
+    return Tooltip(
+      message: type.name,
+      child: AnimatedOpacity(
+        duration: Duration(microseconds: 300),
+        opacity: selected ? 1.0 : 0.4,
+        child: Center(
+          child: Container(
+            margin: margin,
+            height: size,
+            width: size,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(25.0),
+              boxShadow: [
+                if (selected)
+                  BoxShadow(
+                    blurRadius: 10,
+                    offset: Offset(size * 0.05, size * 0.05),
+                    color: HexColor(type.color),
+                  )
+              ],
+            ),
+            child: InkWell(
+              borderRadius: BorderRadius.circular(40),
+              onTap: onTap,
+              child: CachedNetworkImage(
+                imageUrl: type.image,
+                placeholder: (context, url) => Padding(
+                  padding: EdgeInsets.all(4),
+                  child: Image.asset('assets/simbol_pokemon.png'),
+                ),
               ),
             ),
           ),
