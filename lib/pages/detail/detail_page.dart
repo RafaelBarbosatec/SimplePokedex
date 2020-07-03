@@ -9,13 +9,13 @@ class DetailPage extends StatelessWidget {
   const DetailPage({Key key, this.pokemon}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    Color colorbg = HexColor(pokemon.typeObjects.first.color);
+    Color colorBg = HexColor(pokemon.typeObjects.first.color);
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-          colors: [colorbg, colorbg.withOpacity(0.5)],
+          colors: [colorBg, colorBg.withOpacity(0.5)],
         ),
       ),
       child: Scaffold(

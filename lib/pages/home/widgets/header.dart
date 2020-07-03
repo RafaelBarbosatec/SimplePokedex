@@ -62,6 +62,9 @@ class Header extends StatelessWidget {
               ),
             ),
           ),
+          SizedBox(
+            height: 5,
+          ),
           _buildTypes(communication),
         ],
       ),

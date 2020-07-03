@@ -12,8 +12,8 @@ export 'package:simple_pokedex/pages/home/bloc/home_communication.dart';
 class HomeBloc extends BlocBase<HomeCommunication> {
   final PokemonRepository _pokemonRepository;
 
-  List<Pokemon> pokemons;
-  List<PokemonType> pokemonTypes;
+  List<Pokemon> pokemons = List();
+  List<PokemonType> pokemonTypes = List();
   int page = 0;
   static const int LIMIT = 15;
   String name;
@@ -54,7 +54,7 @@ class HomeBloc extends BlocBase<HomeCommunication> {
     pokemonTypes = await _pokemonRepository
         .getPokemonTypes()
         .catchError((error) => print(error));
-    pokemons.forEach((p) {
+    pokemons?.forEach((p) {
       p.typeObjects =
           pokemonTypes.where((t) => p.type.contains(t.name)).toList();
     });
@@ -69,9 +69,7 @@ class HomeBloc extends BlocBase<HomeCommunication> {
   }
 
   void loadPokemons({bool loadMore = false}) async {
-    if (communication.progress.value) return;
-
-    if (loadMore && !canLoadMore) return;
+    if (communication.progress.value || (loadMore && !canLoadMore)) return;
 
     loadMore ? page++ : page = 0;
 
@@ -81,26 +79,28 @@ class HomeBloc extends BlocBase<HomeCommunication> {
         .getPokemonList(page: page, name: name, type: type, limit: LIMIT)
         .catchError((error) => print(error));
 
-    canLoadMore = pokeAux.length == LIMIT;
+    if (pokeAux != null) {
+      canLoadMore = pokeAux.length == LIMIT;
 
-    if (loadMore) {
-      pokemons.addAll(pokeAux);
-    } else {
-      pokemons = pokeAux;
-      communication.showEmpty.set(pokemons.isEmpty);
+      if (loadMore) {
+        pokemons.addAll(pokeAux);
+      } else {
+        pokemons = pokeAux;
+        communication.showEmpty.set(pokemons.isEmpty);
+      }
+
+      pokemons.forEach((p) {
+        p.typeObjects =
+            pokemonTypes.where((t) => p.type.contains(t.name)).toList();
+      });
     }
-
-    pokemons.forEach((p) {
-      p.typeObjects =
-          pokemonTypes.where((t) => p.type.contains(t.name)).toList();
-    });
 
     communication.pokemons.set(pokemons);
     communication.progress.set(false);
   }
 
   void _mapSearchName(String name) {
-    this.name = name.isEmpty ? null : name;
+    this.name = (name?.isEmpty ?? true) ? null : name;
     loadPokemons();
   }
 }
