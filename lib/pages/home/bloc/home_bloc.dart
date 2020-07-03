@@ -48,6 +48,8 @@ class HomeBloc extends BlocBase<HomeCommunication> {
 
   void _loadPokemonListAndTypes() async {
     communication.progress.set(true);
+    communication.showEmpty.set(false);
+
     pokemons = await _pokemonRepository
         .getPokemonList()
         .catchError((error) => print(error));
@@ -58,8 +60,10 @@ class HomeBloc extends BlocBase<HomeCommunication> {
       p.typeObjects =
           pokemonTypes?.where((t) => p.type.contains(t.name))?.toList();
     });
+
     communication.pokemons.set(pokemons);
     communication.pokemonsTypes.set(pokemonTypes);
+    communication.showEmpty.set(pokemons.isEmpty);
     communication.progress.set(false);
   }
 
