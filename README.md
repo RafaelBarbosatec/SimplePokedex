@@ -6,6 +6,7 @@
   <img src="https://github.com/RafaelBarbosatec/SimplePokedex/blob/master/media/print_3.jpg" width="200"/>
 </p>
 
+[Download APK](https://github.com/RafaelBarbosatec/SimplePokedex/blob/master/apk/pokedex.apk)
 
 ## Resources
 
