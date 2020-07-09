@@ -99,6 +99,9 @@ class HomeBloc extends Bloc<HomeCommunication> {
       pokemons.forEach((p) {
         p.typeObjects =
             pokemonTypes.where((t) => p.type.contains(t.name)).toList();
+        p.weaknessObjects = pokemonTypes
+            ?.where((t) => p.weakness.contains(t.name.fistLetterUpperCase()))
+            ?.toList();
       });
     }
 

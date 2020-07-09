@@ -181,6 +181,8 @@ class DetailPage extends StatelessWidget {
   }
 
   Widget _buildWeakness(BuildContext context) {
+    print(pokemon.weaknessObjects);
+    print(pokemon.weakness);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
