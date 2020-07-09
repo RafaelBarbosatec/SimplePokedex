@@ -23,7 +23,7 @@ class DetailPage extends StatelessWidget {
         backgroundColor: Colors.transparent,
         appBar: AppBar(
           centerTitle: true,
-          title: Text('#${pokemon.number} ${pokemon.name}'),
+          title: Text(pokemon.name),
           elevation: 0,
           backgroundColor: Colors.transparent,
         ),
@@ -62,11 +62,20 @@ class DetailPage extends StatelessWidget {
                           ),
                           Text(
                             pokemon.description,
+                            textAlign: TextAlign.center,
                           ),
                           SizedBox(
                             height: 10,
                           ),
                           Divider(),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          _buildDetail(context, colorBg),
+                          SizedBox(
+                            height: 30,
+                          ),
+                          _buildWeakness(context),
                           SizedBox(
                             height: 20,
                           ),
@@ -114,6 +123,87 @@ class DetailPage extends StatelessWidget {
           size: 30,
         );
       }).toList(),
+    );
+  }
+
+  Widget _buildDetail(BuildContext context, Color colorBg) {
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: colorBg,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          _buildLabelAndName(context, 'Weight', pokemon.weight.toString()),
+          Container(
+            width: 1,
+            color: Colors.white.withOpacity(0.5),
+            height: 35,
+          ),
+          _buildLabelAndName(context, 'Height', pokemon.height.toString()),
+          Container(
+            width: 1,
+            color: Colors.white.withOpacity(0.5),
+            height: 35,
+          ),
+          _buildLabelAndName(
+              context, 'Abilities', pokemon.abilities.toString()),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildLabelAndName(BuildContext context, String label, String value) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        Text(
+          label,
+          style: Theme.of(context)
+              .textTheme
+              .headline6
+              .copyWith(color: Colors.white, fontSize: 16),
+        ),
+        SizedBox(
+          height: 4,
+        ),
+        Text(
+          value,
+          style: Theme.of(context)
+              .textTheme
+              .bodyText2
+              .copyWith(color: Colors.white, fontSize: 14),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildWeakness(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        Text(
+          'Weakness',
+          style: Theme.of(context).textTheme.headline6.copyWith(fontSize: 16),
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          children: pokemon.weaknessObjects.map<Widget>((type) {
+            return TypeItem(
+              margin: const EdgeInsets.only(left: 6, right: 6),
+              type: type,
+              selected: true,
+              size: 30,
+            );
+          }).toList(),
+        )
+      ],
     );
   }
 }

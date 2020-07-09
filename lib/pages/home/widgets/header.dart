@@ -46,8 +46,9 @@ class Header extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Container(
               decoration: BoxDecoration(
-                  color: Colors.grey[300],
-                  borderRadius: BorderRadius.circular(30)),
+                color: Colors.grey[300],
+                borderRadius: BorderRadius.circular(30),
+              ),
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: TextField(
@@ -63,9 +64,12 @@ class Header extends StatelessWidget {
             ),
           ),
           SizedBox(
-            height: 5,
+            height: 10,
           ),
           _buildTypes(communication),
+          SizedBox(
+            height: 10,
+          ),
         ],
       ),
     );

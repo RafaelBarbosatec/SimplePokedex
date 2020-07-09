@@ -18,7 +18,7 @@ class _PokemonTypeListState extends State<PokemonTypeList> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 80,
+      height: 70,
       child: ListView.builder(
           padding: EdgeInsets.only(left: 16),
           itemCount: widget.types.length,

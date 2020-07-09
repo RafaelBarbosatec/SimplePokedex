@@ -1,15 +1,14 @@
-import 'package:bsev/bloc_base.dart';
 import 'package:bsev/bsev.dart';
-import 'package:bsev/events_base.dart';
 import 'package:simple_pokedex/pages/home/bloc/home_communication.dart';
 import 'package:simple_pokedex/pages/home/bloc/home_events.dart';
 import 'package:simple_pokedex/repository/pokemon/model/pokemon.dart';
 import 'package:simple_pokedex/repository/pokemon/model/pokemon_type.dart';
 import 'package:simple_pokedex/repository/pokemon/pokemon_repository.dart';
+import 'package:simple_pokedex/util/extensions.dart';
 
 export 'package:simple_pokedex/pages/home/bloc/home_communication.dart';
 
-class HomeBloc extends BlocBase<HomeCommunication> {
+class HomeBloc extends Bloc<HomeCommunication> {
   final PokemonRepository _pokemonRepository;
 
   List<Pokemon> pokemons = List();
@@ -39,7 +38,7 @@ class HomeBloc extends BlocBase<HomeCommunication> {
   }
 
   @override
-  void initView() {
+  void init() {
     communication.queryDebounce.subject
         .debounceTime(Duration(milliseconds: 600))
         .listen(_mapSearchName);
@@ -59,6 +58,9 @@ class HomeBloc extends BlocBase<HomeCommunication> {
     pokemons?.forEach((p) {
       p.typeObjects =
           pokemonTypes?.where((t) => p.type.contains(t.name))?.toList();
+      p.weaknessObjects = pokemonTypes
+          ?.where((t) => p.weakness.contains(t.name.fistLetterUpperCase()))
+          ?.toList();
     });
 
     communication.pokemons.set(pokemons);

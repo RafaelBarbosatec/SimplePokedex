@@ -17,6 +17,7 @@ class Pokemon {
   int id;
   List<String> type;
   List<PokemonType> typeObjects;
+  List<PokemonType> weaknessObjects = List();
 
   Pokemon(
       {this.abilities,

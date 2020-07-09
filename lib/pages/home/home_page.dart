@@ -15,7 +15,7 @@ class HomePage extends StatelessWidget {
       resizeToAvoidBottomPadding: false,
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: Bsev<HomeBloc, HomeCommunication>(
+        child: BsevBuilder<HomeBloc, HomeCommunication>(
           builder: (context, communication) {
             return Stack(
               children: <Widget>[
