@@ -6,6 +6,8 @@ import 'package:simple_pokedex/util/debouncer.dart';
 import 'package:simple_pokedex/util/extensions.dart';
 
 class HomeCube extends Cube {
+  static const int LIMIT = 15;
+
   HomeCube(this._pokemonRepository);
   final PokemonRepository _pokemonRepository;
   final Debouncer _debouncer = Debouncer(Duration(milliseconds: 600));
@@ -17,7 +19,6 @@ class HomeCube extends Cube {
 
   PokemonType _typeSelected;
   int _page = 0;
-  static const int LIMIT = 15;
   String _name;
   bool _canLoadMore = true;
 
