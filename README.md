@@ -13,7 +13,7 @@
 Packages | pub
 --------- | ------
 dio    | [![Pub](https://img.shields.io/pub/v/dio.svg)](https://pub.dartlang.org/packages/dio)
-bsev  | [![Pub](https://img.shields.io/pub/v/bsev.svg)](https://pub.dartlang.org/packages/bsev)
+Cubes  | [![Pub](https://img.shields.io/pub/v/cubes.svg)](https://pub.dartlang.org/packages/cubes)
 cached_network_image  | [![Pub](https://img.shields.io/pub/v/cached_network_image.svg)](https://pub.dartlang.org/packages/cached_network_image)
 
 

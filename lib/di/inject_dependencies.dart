@@ -1,18 +1,15 @@
-import 'package:bsev/bsev.dart';
+import 'package:cubes/cubes.dart';
 import 'package:dio/dio.dart';
-import 'package:simple_pokedex/pages/home/bloc/home_bloc.dart';
+import 'package:simple_pokedex/pages/home/home_cube.dart';
 import 'package:simple_pokedex/repository/pokemon/pokemon_repository.dart';
 
 void injectDependencies() {
   injectUtils();
-  injectBloCs();
+  injectCubes();
 }
 
-void injectBloCs() {
-  registerBloc<HomeBloc, HomeCommunication>(
-    (i) => HomeBloc(i.get()),
-    () => HomeCommunication(),
-  );
+void injectCubes() {
+  registerCube((i) => HomeCube(i.get()));
 }
 
 void injectUtils() {

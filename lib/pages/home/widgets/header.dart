@@ -1,14 +1,13 @@
-import 'package:bsev/bsev.dart';
+import 'package:cubes/cubes.dart';
 import 'package:flutter/material.dart';
-import 'package:simple_pokedex/pages/home/bloc/home_bloc.dart';
-import 'package:simple_pokedex/pages/home/bloc/home_events.dart';
+import 'package:simple_pokedex/pages/home/home_cube.dart';
 import 'package:simple_pokedex/pages/home/widgets/pokemon_type_list.dart';
 import 'package:simple_pokedex/repository/pokemon/model/pokemon_type.dart';
 
 class Header extends StatelessWidget {
-  final HomeCommunication communication;
+  final HomeCube cube;
 
-  const Header({Key key, this.communication}) : super(key: key);
+  const Header({Key key, this.cube}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -53,7 +52,7 @@ class Header extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: TextField(
                   onChanged: (name) {
-                    communication.dispatcher(SearchName(name));
+                    cube.searchName(name);
                   },
                   decoration: InputDecoration(
                       border: InputBorder.none,
@@ -66,7 +65,7 @@ class Header extends StatelessWidget {
           SizedBox(
             height: 10,
           ),
-          _buildTypes(communication),
+          _buildTypes(cube),
           SizedBox(
             height: 10,
           ),
@@ -75,12 +74,12 @@ class Header extends StatelessWidget {
     );
   }
 
-  Widget _buildTypes(HomeCommunication communication) {
-    return communication.pokemonsTypes.builder<List<PokemonType>>((types) {
+  Widget _buildTypes(HomeCube cube) {
+    return cube.pokemonTypeList.build<List<PokemonType>>((types) {
       return PokemonTypeList(
         types: types,
         typeSelected: (type) {
-          communication.dispatcher(SelectType(type));
+          cube.selectType(type);
         },
       );
     });

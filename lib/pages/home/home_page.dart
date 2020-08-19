@@ -1,8 +1,7 @@
-import 'package:bsev/bsev.dart';
+import 'package:cubes/cubes.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_pokedex/pages/detail/detail_page.dart';
-import 'package:simple_pokedex/pages/home/bloc/home_bloc.dart';
-import 'package:simple_pokedex/pages/home/bloc/home_events.dart';
+import 'package:simple_pokedex/pages/home/home_cube.dart';
 import 'package:simple_pokedex/pages/home/widgets/header.dart';
 import 'package:simple_pokedex/pages/home/widgets/pokemon_empty.dart';
 import 'package:simple_pokedex/pages/home/widgets/pokemon_item.dart';
@@ -15,13 +14,13 @@ class HomePage extends StatelessWidget {
       resizeToAvoidBottomPadding: false,
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: BsevBuilder<HomeBloc, HomeCommunication>(
-          builder: (context, communication) {
+        child: CubeBuilder<HomeCube>(
+          builder: (context, cube) {
             return Stack(
               children: <Widget>[
-                _buildContent(context, communication),
-                _buildProgress(communication),
-                _buildEmpty(communication),
+                _buildContent(context, cube),
+                _buildProgress(cube),
+                _buildEmpty(cube),
               ],
             );
           },
@@ -30,27 +29,27 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget _buildContent(BuildContext context, HomeCommunication communication) {
+  Widget _buildContent(BuildContext context, HomeCube cube) {
     return Column(
       children: <Widget>[
-        Header(communication: communication),
+        Header(cube: cube),
         SizedBox(
           height: 2,
         ),
-        _buildPokemonList(communication)
+        _buildPokemonList(cube)
       ],
     );
   }
 
-  Widget _buildPokemonList(HomeCommunication communication) {
+  Widget _buildPokemonList(HomeCube cube) {
     return Expanded(
-      child: communication.pokemons.builder<List<Pokemon>>((list) {
+      child: cube.pokemonList.build<List<Pokemon>>((list) {
         return ListView.builder(
           padding: EdgeInsets.only(bottom: 16),
           itemCount: list.length,
           itemBuilder: (context, index) {
             if (index == list.length - 3) {
-              communication.dispatcher(LoadPokemons(true));
+              cube.loadPokemonList(loadMore: true);
             }
             final pokemon = list[index];
             return PokemonItem(
@@ -72,8 +71,8 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget _buildProgress(HomeCommunication streams) {
-    return streams.progress.builder<bool>((show) {
+  Widget _buildProgress(HomeCube cube) {
+    return cube.progress.build<bool>((show) {
       return show
           ? Center(
               child: CircularProgressIndicator(),
@@ -82,8 +81,8 @@ class HomePage extends StatelessWidget {
     });
   }
 
-  Widget _buildEmpty(HomeCommunication streams) {
-    return streams.showEmpty.builder<bool>((show) {
+  Widget _buildEmpty(HomeCube cube) {
+    return cube.showEmpty.build<bool>((show) {
       return show ? PokemonEmpty() : SizedBox.shrink();
     });
   }
