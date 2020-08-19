@@ -31,24 +31,12 @@ class HomeCube extends Cube {
     progress.set(true);
     showEmpty.set(false);
 
-    final pokemons = await _pokemonRepository
-        .getPokemonList()
-        .catchError((error) => onError(error));
-    final pokemonTypes = await _pokemonRepository
+    final types = await _pokemonRepository
         .getPokemonTypes()
         .catchError((error) => print(error));
-    pokemons?.forEach((p) {
-      p.typeObjects =
-          pokemonTypes?.where((t) => p.type.contains(t.name))?.toList();
-      p.weaknessObjects = pokemonTypes
-          ?.where((t) => p.weakness.contains(t.name.fistLetterUpperCase()))
-          ?.toList();
-    });
 
-    pokemonList.set(pokemons);
-    pokemonTypeList.set(pokemonTypes);
-    showEmpty.set(pokemons.isEmpty);
-    progress.set(false);
+    pokemonTypeList.set(types);
+    loadPokemonList(force: true);
   }
 
   void selectType(PokemonType type) {
@@ -56,8 +44,8 @@ class HomeCube extends Cube {
     loadPokemonList();
   }
 
-  void loadPokemonList({bool loadMore = false}) async {
-    if (progress.value || (loadMore && !_canLoadMore)) return;
+  void loadPokemonList({bool loadMore = false, bool force = false}) async {
+    if ((progress.value && !force) || (loadMore && !_canLoadMore)) return;
 
     loadMore ? _page++ : _page = 0;
 

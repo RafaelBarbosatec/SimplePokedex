@@ -76,11 +76,15 @@ class Header extends StatelessWidget {
 
   Widget _buildTypes(HomeCube cube) {
     return cube.pokemonTypeList.build<List<PokemonType>>((types) {
-      return PokemonTypeList(
-        types: types,
-        typeSelected: (type) {
-          cube.selectType(type);
-        },
+      return AnimatedOpacity(
+        duration: Duration(milliseconds: 300),
+        opacity: types.isEmpty ? 0 : 1,
+        child: PokemonTypeList(
+          types: types,
+          typeSelected: (type) {
+            cube.selectType(type);
+          },
+        ),
       );
     });
   }

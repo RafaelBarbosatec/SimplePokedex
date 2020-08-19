@@ -44,28 +44,32 @@ class HomePage extends StatelessWidget {
   Widget _buildPokemonList(HomeCube cube) {
     return Expanded(
       child: cube.pokemonList.build<List<Pokemon>>((list) {
-        return ListView.builder(
-          padding: EdgeInsets.only(bottom: 16),
-          itemCount: list.length,
-          itemBuilder: (context, index) {
-            if (index == list.length - 3) {
-              cube.loadPokemonList(loadMore: true);
-            }
-            final pokemon = list[index];
-            return PokemonItem(
-              pokemon: pokemon,
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => DetailPage(
-                      pokemon: pokemon,
+        return AnimatedOpacity(
+          duration: Duration(milliseconds: 300),
+          opacity: list.isEmpty ? 0 : 1,
+          child: ListView.builder(
+            padding: EdgeInsets.only(bottom: 16),
+            itemCount: list.length,
+            itemBuilder: (context, index) {
+              if (index == list.length - 3) {
+                cube.loadPokemonList(loadMore: true);
+              }
+              final pokemon = list[index];
+              return PokemonItem(
+                pokemon: pokemon,
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => DetailPage(
+                        pokemon: pokemon,
+                      ),
                     ),
-                  ),
-                );
-              },
-            );
-          },
+                  );
+                },
+              );
+            },
+          ),
         );
       }),
     );
