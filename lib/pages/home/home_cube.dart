@@ -28,15 +28,15 @@ class HomeCube extends Cube {
     super.ready();
   }
 
-  void _loadPokemonListAndTypes() async {
+  void _loadPokemonListAndTypes() {
+    if (showEmpty.value) showEmpty.set(false);
     progress.set(true);
-    showEmpty.set(false);
 
-    final types = await _pokemonRepository
+    _pokemonRepository
         .getPokemonTypes()
-        .catchError((error) => print(error));
+        .then((types) => pokemonTypeList.set(types))
+        .catchError((error) => onError(error.toString()));
 
-    pokemonTypeList.set(types);
     loadPokemonList(force: true);
   }
 
@@ -51,44 +51,47 @@ class HomeCube extends Cube {
     loadMore ? _page++ : _page = 0;
 
     if (showEmpty.value) showEmpty.set(false);
-    progress.set(true);
+    if (!progress.value) progress.set(true);
 
-    List<Pokemon> pokeAux = await _pokemonRepository
+    _pokemonRepository
         .getPokemonList(
           page: _page,
           name: _name,
           type: _typeSelected?.name,
           limit: LIMIT,
         )
-        .catchError((error) => onError(error));
-
-    if (pokeAux != null) {
-      _canLoadMore = pokeAux.length == LIMIT;
-
-      pokeAux.forEach((p) {
-        p.typeObjects = pokemonTypeList.value
-            ?.where((t) => p.type.contains(t.name))
-            ?.toList();
-        p.weaknessObjects = pokemonTypeList.value
-            ?.where((t) => p.weakness.contains(t.name.fistLetterUpperCase()))
-            ?.toList();
-      });
-
-      if (loadMore) {
-        pokemonList.value.addAll(pokeAux);
-        pokemonList.set(pokemonList.value);
-      } else {
-        pokemonList.set(pokeAux);
-        showEmpty.set(pokemonList.value.isEmpty);
-      }
-    }
-    progress.set(false);
+        .then((response) {
+          _canLoadMore = response.length == LIMIT;
+          _setTypeInList(response);
+          if (loadMore) {
+            pokemonList.value.addAll(response);
+            pokemonList.set(pokemonList.value);
+          } else {
+            pokemonList.set(response);
+            showEmpty.set(pokemonList.value.isEmpty);
+          }
+        })
+        .catchError((error) => onError(error))
+        .whenComplete(() {
+          progress.set(false);
+        });
   }
 
   void searchName(String name) {
     _debouncer.call(() {
       this._name = (name?.isEmpty ?? true) ? null : name;
       loadPokemonList();
+    });
+  }
+
+  void _setTypeInList(List<Pokemon> response) {
+    response.forEach((p) {
+      p.typeObjects = pokemonTypeList.value
+          ?.where((t) => p.type.contains(t.name))
+          ?.toList();
+      p.weaknessObjects = pokemonTypeList.value
+          ?.where((t) => p.weakness.contains(t.name.fistLetterUpperCase()))
+          ?.toList();
     });
   }
 }

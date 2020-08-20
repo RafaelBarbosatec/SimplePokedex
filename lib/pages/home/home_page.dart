@@ -15,6 +15,9 @@ class HomePage extends StatelessWidget {
       backgroundColor: Colors.white,
       body: SafeArea(
         child: CubeBuilder<HomeCube>(
+          onError: (cube, text) {
+            print(text);
+          },
           builder: (context, cube) {
             return Stack(
               children: <Widget>[
