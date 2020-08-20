@@ -70,7 +70,7 @@ packages:
       name: cubes
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.0.6"
+    version: "0.0.7"
   dio:
     dependency: "direct main"
     description:

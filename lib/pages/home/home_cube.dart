@@ -12,10 +12,10 @@ class HomeCube extends Cube {
   final PokemonRepository _pokemonRepository;
   final Debouncer _debouncer = Debouncer(Duration(milliseconds: 600));
 
-  final progress = ObservableValue<bool>(initValue: false);
-  final showEmpty = ObservableValue<bool>(initValue: false);
-  final pokemonList = ObservableValue<List<Pokemon>>(initValue: []);
-  final pokemonTypeList = ObservableValue<List<PokemonType>>(initValue: []);
+  final progress = ObservableValue<bool>(value: false);
+  final showEmpty = ObservableValue<bool>(value: false);
+  final pokemonList = ObservableValue<List<Pokemon>>(value: []);
+  final pokemonTypeList = ObservableValue<List<PokemonType>>(value: []);
 
   PokemonType _typeSelected;
   int _page = 0;
@@ -29,12 +29,12 @@ class HomeCube extends Cube {
   }
 
   void _loadPokemonListAndTypes() {
-    if (showEmpty.value) showEmpty.set(false);
-    progress.set(true);
+    if (showEmpty.value) showEmpty.value = false;
+    progress.value = true;
 
     _pokemonRepository
         .getPokemonTypes()
-        .then((types) => pokemonTypeList.set(types))
+        .then((types) => pokemonTypeList.value = types)
         .catchError((error) => onError(error.toString()));
 
     loadPokemonList(force: true);
@@ -50,8 +50,8 @@ class HomeCube extends Cube {
 
     loadMore ? _page++ : _page = 0;
 
-    if (showEmpty.value) showEmpty.set(false);
-    if (!progress.value) progress.set(true);
+    if (showEmpty.value) showEmpty.value = false;
+    if (!progress.value) progress.value = true;
 
     _pokemonRepository
         .getPokemonList(
@@ -65,15 +65,15 @@ class HomeCube extends Cube {
           _setTypeInList(response);
           if (loadMore) {
             pokemonList.value.addAll(response);
-            pokemonList.set(pokemonList.value);
+            pokemonList.notify();
           } else {
-            pokemonList.set(response);
-            showEmpty.set(pokemonList.value.isEmpty);
+            pokemonList.value = response;
+            showEmpty.value = pokemonList.value.isEmpty;
           }
         })
         .catchError((error) => onError(error))
         .whenComplete(() {
-          progress.set(false);
+          progress.value = false;
         });
   }
 

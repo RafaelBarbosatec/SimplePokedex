@@ -61,14 +61,7 @@ class HomePage extends StatelessWidget {
               return PokemonItem(
                 pokemon: pokemon,
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => DetailPage(
-                        pokemon: pokemon,
-                      ),
-                    ),
-                  );
+                  context.goTo(DetailPage(pokemon: pokemon));
                 },
               );
             },
