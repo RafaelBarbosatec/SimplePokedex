@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cubes/cubes.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_pokedex/pages/home/widgets/type_item.dart';
 import 'package:simple_pokedex/repository/pokemon/model/pokemon.dart';
@@ -57,16 +58,8 @@ class PokemonItem extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          Text(
-            '#${pokemon.number}',
-            style: TextStyle(color: Colors.grey),
-          ),
-          Text(
-            pokemon.name,
-            style: TextStyle(
-              fontSize: 18,
-            ),
-          ),
+          '#${pokemon.number}'.body(context, color: Colors.grey),
+          pokemon.name.body(context, fontSize: 18),
         ],
       ),
     );

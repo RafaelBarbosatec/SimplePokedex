@@ -2,7 +2,6 @@ import 'package:cubes/cubes.dart';
 import 'package:simple_pokedex/repository/pokemon/model/pokemon.dart';
 import 'package:simple_pokedex/repository/pokemon/model/pokemon_type.dart';
 import 'package:simple_pokedex/repository/pokemon/pokemon_repository.dart';
-import 'package:simple_pokedex/util/debouncer.dart';
 import 'package:simple_pokedex/util/extensions.dart';
 
 class HomeCube extends Cube {
@@ -10,7 +9,6 @@ class HomeCube extends Cube {
 
   HomeCube(this._pokemonRepository);
   final PokemonRepository _pokemonRepository;
-  final Debouncer _debouncer = Debouncer(Duration(milliseconds: 600));
 
   final progress = ObservableValue<bool>(value: false);
   final showEmpty = ObservableValue<bool>(value: false);
@@ -78,7 +76,7 @@ class HomeCube extends Cube {
   }
 
   void searchName(String name) {
-    _debouncer.call(() {
+    runDebounce('search', () {
       this._name = (name?.isEmpty ?? true) ? null : name;
       loadPokemonList();
     });

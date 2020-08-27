@@ -72,13 +72,16 @@ class HomePage extends StatelessWidget {
   }
 
   Widget _buildProgress(HomeCube cube) {
-    return cube.progress.build<bool>((show) {
-      return show
-          ? Center(
-              child: CircularProgressIndicator(),
-            )
-          : SizedBox.shrink();
-    });
+    return cube.progress.build<bool>(
+      (show) {
+        return show
+            ? Center(
+                child: CircularProgressIndicator(),
+              )
+            : SizedBox.shrink();
+      },
+      animate: true,
+    );
   }
 
   Widget _buildEmpty(HomeCube cube) {

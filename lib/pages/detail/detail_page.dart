@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cubes/cubes.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_pokedex/pages/home/widgets/type_item.dart';
 import 'package:simple_pokedex/repository/pokemon/model/pokemon.dart';
@@ -23,7 +24,7 @@ class DetailPage extends StatelessWidget {
         backgroundColor: Colors.transparent,
         appBar: AppBar(
           centerTitle: true,
-          title: Text(pokemon.name),
+          title: pokemon.name.title(context, color: Colors.white),
           elevation: 0,
           backgroundColor: Colors.transparent,
         ),
@@ -48,10 +49,7 @@ class DetailPage extends StatelessWidget {
                         mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
                           Center(
-                            child: Text(
-                              pokemon.name,
-                              style: Theme.of(context).textTheme.headline6,
-                            ),
+                            child: pokemon.name.title(context),
                           ),
                           SizedBox(
                             height: 10,
@@ -60,10 +58,8 @@ class DetailPage extends StatelessWidget {
                           SizedBox(
                             height: 20,
                           ),
-                          Text(
-                            pokemon.description,
-                            textAlign: TextAlign.center,
-                          ),
+                          pokemon.description
+                              .body(context, textAlign: TextAlign.center),
                           SizedBox(
                             height: 10,
                           ),
@@ -159,23 +155,11 @@ class DetailPage extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        Text(
-          label,
-          style: Theme.of(context)
-              .textTheme
-              .headline6
-              .copyWith(color: Colors.white, fontSize: 16),
-        ),
+        label.title(context, fontSize: 16, color: Colors.white),
         SizedBox(
           height: 4,
         ),
-        Text(
-          value,
-          style: Theme.of(context)
-              .textTheme
-              .bodyText2
-              .copyWith(color: Colors.white, fontSize: 14),
-        ),
+        value.body(context, fontSize: 14, color: Colors.white),
       ],
     );
   }
@@ -187,10 +171,7 @@ class DetailPage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        Text(
-          'Weakness',
-          style: Theme.of(context).textTheme.headline6.copyWith(fontSize: 16),
-        ),
+        'Weakness'.title(context, fontSize: 16),
         SizedBox(
           height: 10,
         ),
