@@ -1,3 +1,4 @@
+import 'package:cubes/cubes.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_pokedex/di/dependency_injector.dart';
 import 'package:simple_pokedex/pages/home/home_page.dart';
@@ -8,7 +9,12 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+  final cubeLocation = CubesLocalizationDelegate(
+    [
+      Locale('en', 'US'),
+      Locale('pt', 'BR'),
+    ],
+  );
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -16,6 +22,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
+      localizationsDelegates: cubeLocation.delegates, // see here
+      supportedLocales: cubeLocation.supportedLocations, // see here
       home: HomePage(),
     );
   }

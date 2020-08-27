@@ -135,20 +135,22 @@ class DetailPage extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          _buildLabelAndName(context, 'Weight', pokemon.weight.toString()),
-          Container(
-            width: 1,
-            color: Colors.white.withOpacity(0.5),
-            height: 35,
-          ),
-          _buildLabelAndName(context, 'Height', pokemon.height.toString()),
+          _buildLabelAndName(
+              context, getString('weight'), pokemon.weight.toString()),
           Container(
             width: 1,
             color: Colors.white.withOpacity(0.5),
             height: 35,
           ),
           _buildLabelAndName(
-              context, 'Abilities', pokemon.abilities.toString()),
+              context, getString('height'), pokemon.height.toString()),
+          Container(
+            width: 1,
+            color: Colors.white.withOpacity(0.5),
+            height: 35,
+          ),
+          _buildLabelAndName(
+              context, getString('abilities'), pokemon.abilities.toString()),
         ],
       ),
     );
@@ -174,7 +176,7 @@ class DetailPage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        'Weakness'.title(context, fontSize: 16),
+        getString('weakness').title(context, fontSize: 16),
         SizedBox(
           height: 10,
         ),

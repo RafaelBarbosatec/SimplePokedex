@@ -57,7 +57,7 @@ class Header extends StatelessWidget {
                   decoration: InputDecoration(
                       border: InputBorder.none,
                       focusedBorder: InputBorder.none,
-                      hintText: 'Search per name'),
+                      hintText: getString('search')),
                 ),
               ),
             ),
