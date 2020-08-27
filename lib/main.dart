@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:simple_pokedex/di/inject_dependencies.dart';
+import 'package:simple_pokedex/di/dependency_injector.dart';
 import 'package:simple_pokedex/pages/home/home_page.dart';
 
 void main() {
