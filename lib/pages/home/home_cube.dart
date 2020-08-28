@@ -12,8 +12,8 @@ class HomeCube extends Cube {
 
   final progress = ObservableValue<bool>(value: false);
   final showEmpty = ObservableValue<bool>(value: false);
-  final pokemonList = ObservableValue<List<Pokemon>>(value: []);
-  final pokemonTypeList = ObservableValue<List<PokemonType>>(value: []);
+  final pokemonList = ObservableList<Pokemon>(value: []);
+  final pokemonTypeList = ObservableList<PokemonType>(value: []);
 
   PokemonType _typeSelected;
   int _page = 0;
@@ -62,8 +62,7 @@ class HomeCube extends Cube {
           _canLoadMore = response.length == LIMIT;
           _setTypeInList(response);
           if (loadMore) {
-            pokemonList.value.addAll(response);
-            pokemonList.notify();
+            pokemonList.addAll(response);
           } else {
             pokemonList.value = response;
             showEmpty.value = pokemonList.value.isEmpty;
