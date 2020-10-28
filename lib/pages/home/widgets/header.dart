@@ -22,10 +22,7 @@ class Header extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 16.0, top: 20),
                 child: Text(
                   'SimplePokedex',
-                  style: Theme.of(context)
-                      .textTheme
-                      .title
-                      .copyWith(color: Colors.grey[700]),
+                  style: Theme.of(context).textTheme.title.copyWith(color: Colors.grey[700]),
                 ),
               ),
               Padding(
@@ -55,9 +52,7 @@ class Header extends StatelessWidget {
                     cube.searchName(name);
                   },
                   decoration: InputDecoration(
-                      border: InputBorder.none,
-                      focusedBorder: InputBorder.none,
-                      hintText: getString('search')),
+                      border: InputBorder.none, focusedBorder: InputBorder.none, hintText: Cubes.getString('search')),
                 ),
               ),
             ),

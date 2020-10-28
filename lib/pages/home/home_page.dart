@@ -7,26 +7,19 @@ import 'package:simple_pokedex/pages/home/widgets/pokemon_empty.dart';
 import 'package:simple_pokedex/pages/home/widgets/pokemon_item.dart';
 import 'package:simple_pokedex/repository/pokemon/model/pokemon.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends CubeWidget<HomeCube> {
   @override
-  Widget build(BuildContext context) {
+  Widget buildView(BuildContext context, HomeCube cube) {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: CubeBuilder<HomeCube>(
-          onError: (cube, text) {
-            print(text);
-          },
-          builder: (context, cube) {
-            return Stack(
-              children: <Widget>[
-                _buildContent(context, cube),
-                _buildProgress(cube),
-                _buildEmpty(cube),
-              ],
-            );
-          },
+        child: Stack(
+          children: <Widget>[
+            _buildContent(context, cube),
+            _buildProgress(cube),
+            _buildEmpty(cube),
+          ],
         ),
       ),
     );

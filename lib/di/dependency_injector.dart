@@ -9,12 +9,16 @@ void injectDependencies() {
 }
 
 void injectCubes() {
-  registerCube((i) => HomeCube(i.get()));
+  Cubes.registerDependency((i) => HomeCube(i.getDependency()));
 }
 
 void injectUtils() {
-  registerSingletonDependency(
+  Cubes.registerDependency(
     (i) => Dio(BaseOptions(baseUrl: 'http://104.131.18.84/')),
+    isSingleton: true,
   );
-  registerSingletonDependency((i) => PokemonRepository(i.get()));
+  Cubes.registerDependency(
+    (i) => PokemonRepository(i.getDependency()),
+    isSingleton: true,
+  );
 }
