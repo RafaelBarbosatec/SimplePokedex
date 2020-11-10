@@ -28,7 +28,7 @@ class HomePage extends CubeWidget<HomeCube> {
   Widget _buildContent(BuildContext context, HomeCube cube) {
     return Column(
       children: <Widget>[
-        Header(cube: cube),
+        Header(),
         SizedBox(
           height: 2,
         ),

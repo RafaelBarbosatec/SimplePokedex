@@ -4,10 +4,14 @@ import 'package:simple_pokedex/pages/home/home_cube.dart';
 import 'package:simple_pokedex/pages/home/widgets/pokemon_type_list.dart';
 import 'package:simple_pokedex/repository/pokemon/model/pokemon_type.dart';
 
-class Header extends StatelessWidget {
-  final HomeCube cube;
+class Header extends StatefulWidget {
+  const Header({Key key}) : super(key: key);
 
-  const Header({Key key, this.cube}) : super(key: key);
+  @override
+  _HeaderState createState() => _HeaderState();
+}
+
+class _HeaderState extends State<Header> {
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -22,7 +26,7 @@ class Header extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 16.0, top: 20),
                 child: Text(
                   'SimplePokedex',
-                  style: Theme.of(context).textTheme.title.copyWith(color: Colors.grey[700]),
+                  style: Theme.of(context).textTheme.headline6.copyWith(color: Colors.grey[700]),
                 ),
               ),
               Padding(
@@ -48,9 +52,7 @@ class Header extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: TextField(
-                  onChanged: (name) {
-                    cube.searchName(name);
-                  },
+                  onChanged: (name) => Cubes.of<HomeCube>(context).searchName(name),
                   decoration: InputDecoration(
                       border: InputBorder.none, focusedBorder: InputBorder.none, hintText: Cubes.getString('search')),
                 ),
@@ -60,7 +62,7 @@ class Header extends StatelessWidget {
           SizedBox(
             height: 10,
           ),
-          _buildTypes(cube),
+          _buildTypes(Cubes.of(context)),
           SizedBox(
             height: 10,
           ),
@@ -70,16 +72,19 @@ class Header extends StatelessWidget {
   }
 
   Widget _buildTypes(HomeCube cube) {
-    return cube.pokemonTypeList.build<List<PokemonType>>((types) {
-      return AnimatedOpacity(
-        duration: Duration(milliseconds: 300),
-        opacity: types.isEmpty ? 0 : 1,
-        child: PokemonTypeList(
-          types: types,
-          typeSelected: (type) {
-            cube.selectType(type);
-          },
-        ),
+    return cube.typeSelected.build<PokemonType>((selected) {
+      return cube.pokemonTypeList.build<List<PokemonType>>(
+        (types) {
+          return AnimatedOpacity(
+            duration: Duration(milliseconds: 300),
+            opacity: types.isEmpty ? 0 : 1,
+            child: PokemonTypeList(
+              types: types,
+              selected: selected,
+              onTypeSelected: (type) => cube.selectType(type),
+            ),
+          );
+        },
       );
     });
   }
