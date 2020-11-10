@@ -52,7 +52,7 @@ class _HeaderState extends State<Header> {
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: TextField(
-                  onChanged: (name) => Cubes.of<HomeCube>(context).searchName(name),
+                  onChanged: (name) => Cubes.of<HomeCube>(context).didSearchPerName(name),
                   decoration: InputDecoration(
                       border: InputBorder.none, focusedBorder: InputBorder.none, hintText: Cubes.getString('search')),
                 ),
@@ -81,7 +81,7 @@ class _HeaderState extends State<Header> {
             child: PokemonTypeList(
               types: types,
               selected: selected,
-              onTypeSelected: (type) => cube.selectType(type),
+              onTypeSelected: (type) => cube.didSelectType(type),
             ),
           );
         },

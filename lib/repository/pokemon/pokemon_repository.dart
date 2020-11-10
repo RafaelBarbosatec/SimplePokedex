@@ -5,6 +5,7 @@ import 'package:simple_pokedex/repository/pokemon/model/pokemon_type.dart';
 class PokemonRepository {
   final Dio _api;
 
+  List<PokemonType> cacheTypes;
   PokemonRepository(this._api);
 
   Future<List<Pokemon>> getPokemonList({
@@ -25,8 +26,10 @@ class PokemonRepository {
   }
 
   Future<List<PokemonType>> getPokemonTypes() {
-    return _api
-        .get('pokemon/types')
-        .then((response) => response.data['data'].map<PokemonType>((item) => PokemonType.fromJson(item)).toList());
+    if (cacheTypes != null) return Future.value(cacheTypes);
+    return _api.get('pokemon/types').then((response) {
+      cacheTypes = response.data['data'].map<PokemonType>((item) => PokemonType.fromJson(item)).toList();
+      return cacheTypes;
+    });
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cubes/cubes.dart';
 import 'package:simple_pokedex/repository/pokemon/model/pokemon.dart';
 import 'package:simple_pokedex/repository/pokemon/model/pokemon_type.dart';
@@ -22,25 +24,19 @@ class HomeCube extends Cube {
 
   @override
   void ready() {
-    _loadPokemonListAndTypes();
+    loadPokemonList();
     super.ready();
   }
 
-  void _loadPokemonListAndTypes() {
-    if (showEmpty.value) showEmpty.value = false;
-    progress.value = true;
-
-    _pokemonRepository
-        .getPokemonTypes()
-        .then((types) => pokemonTypeList.value = types)
-        .catchError((error) => onAction(CubeErrorAction(text: error.toString())));
-
-    loadPokemonList(force: true);
-  }
-
-  void selectType(PokemonType type) {
+  void didSelectType(PokemonType type) {
     typeSelected.value = type;
     loadPokemonList();
+  }
+
+  void didSearchPerName(String name) {
+    runDebounce(KEY_DEBOUNCE, () {
+      loadPokemonList(pokemonName: name);
+    });
   }
 
   void loadPokemonList({
@@ -63,31 +59,45 @@ class HomeCube extends Cube {
           type: typeSelected?.value?.name,
           limit: LIMIT,
         )
-        .then((response) {
-          _setTypeInList(response);
-          if (loadMore) {
-            pokemonList.addAll(response);
-          } else {
-            pokemonList.value = response;
-            showEmpty.value = pokemonList.value.isEmpty;
-          }
-        })
-        .catchError((error) => onAction(CubeErrorAction(text: error.toString())))
-        .whenComplete(() => progress.value = false);
+        .asStream()
+        .asyncMap(_mapList)
+        .listen(
+          (response) => _onResponse(response, loadMore),
+          onError: (error) => onAction(CubeErrorAction(text: error.toString())),
+          onDone: () => progress.value = false,
+        );
   }
 
-  void searchName(String name) {
-    runDebounce(KEY_DEBOUNCE, () {
-      loadPokemonList(pokemonName: name);
-    });
+  Future<List<PokemonType>> _loadPokemonTypes() {
+    return _pokemonRepository
+        .getPokemonTypes()
+        .catchError((error) => onAction(CubeErrorAction(text: error.toString())));
   }
 
-  void _setTypeInList(List<Pokemon> response) {
-    response.forEach((p) {
-      p.typeObjects = pokemonTypeList.value?.where((t) => p.type.contains(t.name))?.toList();
-      p.weaknessObjects = pokemonTypeList.value?.where((t) {
+  Future<List<Pokemon>> _mapList(List<Pokemon> event) async {
+    pokemonTypeList.value = await _loadPokemonTypes();
+    return _mapTypeInList(
+      pokemonList: event,
+      pokemonTypeList: pokemonTypeList.value,
+    );
+  }
+
+  List<Pokemon> _mapTypeInList({List<Pokemon> pokemonList, List<PokemonType> pokemonTypeList}) {
+    pokemonList.forEach((p) {
+      p.typeObjects = pokemonTypeList?.where((t) => p.type.contains(t.name))?.toList();
+      p.weaknessObjects = pokemonTypeList?.where((t) {
         return p.weakness.contains(t.name.fistLetterUpperCase());
       })?.toList();
     });
+    return pokemonList;
+  }
+
+  void _onResponse(List<Pokemon> event, bool loadMore) {
+    if (loadMore) {
+      pokemonList.addAll(event);
+    } else {
+      pokemonList.value = event;
+      showEmpty.value = pokemonList.value.isEmpty;
+    }
   }
 }
