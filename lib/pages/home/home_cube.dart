@@ -16,9 +16,9 @@ class HomeCube extends Cube {
 
   final progress = ObservableValue<bool>(value: false);
   final showEmpty = ObservableValue<bool>(value: false);
+  final typeSelected = ObservableValue<PokemonType>();
   final pokemonList = ObservableList<Pokemon>(value: []);
   final pokemonTypeList = ObservableList<PokemonType>(value: []);
-  final typeSelected = ObservableValue<PokemonType>();
 
   bool get canLoadMore => pokemonList.length % LIMIT == 0;
 
@@ -41,10 +41,9 @@ class HomeCube extends Cube {
 
   void loadPokemonList({
     bool loadMore = false,
-    bool force = false,
     String pokemonName,
   }) {
-    if ((progress.value && !force) || (loadMore && !canLoadMore)) return;
+    if (progress.value || (loadMore && !canLoadMore)) return;
 
     int page = 0;
     if (loadMore) page = (pokemonList.length ~/ LIMIT) + 1;
