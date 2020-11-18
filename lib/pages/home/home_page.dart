@@ -53,9 +53,7 @@ class HomePage extends CubeWidget<HomeCube> {
               final pokemon = list[index];
               return PokemonItem(
                 pokemon: pokemon,
-                onTap: () {
-                  context.goTo(DetailPage(pokemon: pokemon));
-                },
+                onTap: () => context.goTo(DetailPage(pokemon: pokemon)),
               );
             },
           ),
@@ -66,20 +64,15 @@ class HomePage extends CubeWidget<HomeCube> {
 
   Widget _buildProgress(HomeCube cube) {
     return cube.progress.build<bool>(
-      (show) {
-        return show
-            ? Center(
-                child: CircularProgressIndicator(),
-              )
-            : SizedBox.shrink();
-      },
+      (show) => show ? Center(child: CircularProgressIndicator()) : SizedBox.shrink(),
       animate: true,
     );
   }
 
   Widget _buildEmpty(HomeCube cube) {
-    return cube.showEmpty.build<bool>((show) {
-      return show ? PokemonEmpty() : SizedBox.shrink();
-    });
+    return cube.showEmpty.build<bool>(
+      (show) => show ? PokemonEmpty() : SizedBox.shrink(),
+      animate: true,
+    );
   }
 }
