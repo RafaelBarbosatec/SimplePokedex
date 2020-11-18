@@ -29,7 +29,7 @@ class HomeCube extends Cube {
   }
 
   void didSelectType(PokemonType type) {
-    typeSelected.value = type;
+    typeSelected.update(type);
     loadPokemonList();
   }
 
@@ -49,8 +49,8 @@ class HomeCube extends Cube {
     int page = 0;
     if (loadMore) page = (pokemonList.length ~/ LIMIT) + 1;
 
-    if (showEmpty.value) showEmpty.value = false;
-    if (!progress.value) progress.value = true;
+    if (showEmpty.value) showEmpty.update(false);
+    if (!progress.value) progress.update(true);
 
     _pokemonRepository
         .getPokemonList(
@@ -60,26 +60,27 @@ class HomeCube extends Cube {
           limit: LIMIT,
         )
         .asStream()
-        .asyncMap(_mapList)
+        .asyncMap(_mapListWithTypes)
         .listen(
           (response) => _onResponse(response, loadMore),
           onError: (error) => onAction(CubeErrorAction(text: error.toString())),
-          onDone: () => progress.value = false,
+          onDone: () => progress.update(false),
         );
+  }
+
+  Future<List<Pokemon>> _mapListWithTypes(List<Pokemon> event) async {
+    final list = await _loadPokemonTypes();
+    pokemonTypeList.update(list);
+    return _mapTypeInList(
+      pokemonList: event,
+      pokemonTypeList: pokemonTypeList.value,
+    );
   }
 
   Future<List<PokemonType>> _loadPokemonTypes() {
     return _pokemonRepository
         .getPokemonTypes()
         .catchError((error) => onAction(CubeErrorAction(text: error.toString())));
-  }
-
-  Future<List<Pokemon>> _mapList(List<Pokemon> event) async {
-    pokemonTypeList.value = await _loadPokemonTypes();
-    return _mapTypeInList(
-      pokemonList: event,
-      pokemonTypeList: pokemonTypeList.value,
-    );
   }
 
   List<Pokemon> _mapTypeInList({List<Pokemon> pokemonList, List<PokemonType> pokemonTypeList}) {
@@ -96,8 +97,8 @@ class HomeCube extends Cube {
     if (loadMore) {
       pokemonList.addAll(event);
     } else {
-      pokemonList.value = event;
-      showEmpty.value = pokemonList.value.isEmpty;
+      pokemonList.update(event);
+      showEmpty.update(pokemonList.value.isEmpty);
     }
   }
 }
