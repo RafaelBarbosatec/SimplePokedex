@@ -19,6 +19,7 @@ class HomeCube extends Cube {
   final typeSelected = ObservableValue<PokemonType>();
   final pokemonList = ObservableList<Pokemon>(value: []);
   final pokemonTypeList = ObservableList<PokemonType>(value: []);
+  final snackBarControl = ObservableValue<CFeedBackControl<String>>(value: CFeedBackControl());
 
   bool get canLoadMore => pokemonList.length % LIMIT == 0;
 
@@ -62,7 +63,7 @@ class HomeCube extends Cube {
         .asyncMap(_mapListWithTypes)
         .listen(
           (response) => _onResponse(response, loadMore),
-          onError: (error) => onAction(CubeErrorAction(text: error.toString())),
+          onError: (error) => snackBarControl.modify((value) => value.copyWith(show: true, data: error.toString())),
           onDone: () => progress.update(false),
         );
   }
@@ -79,7 +80,7 @@ class HomeCube extends Cube {
   Future<List<PokemonType>> _loadPokemonTypes() {
     return _pokemonRepository
         .getPokemonTypes()
-        .catchError((error) => onAction(CubeErrorAction(text: error.toString())));
+        .catchError((error) => snackBarControl.modify((value) => value.copyWith(show: true, data: error.toString())));
   }
 
   List<Pokemon> _mapTypeInList({List<Pokemon> pokemonList, List<PokemonType> pokemonTypeList}) {

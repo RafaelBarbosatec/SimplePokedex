@@ -13,13 +13,21 @@ class HomePage extends CubeWidget<HomeCube> {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       backgroundColor: Colors.white,
-      body: SafeArea(
-        child: Stack(
-          children: <Widget>[
-            _buildContent(context, cube),
-            _buildProgress(cube),
-            _buildEmpty(cube),
-          ],
+      body: CFeedBackManager(
+        snackBarControllers: [
+          CSnackBarController<String>(
+            observable: cube.snackBarControl,
+            builder: (value, context) => SnackBar(content: Text(value)),
+          ),
+        ],
+        child: SafeArea(
+          child: Stack(
+            children: <Widget>[
+              _buildContent(context, cube),
+              _buildProgress(cube),
+              _buildEmpty(cube),
+            ],
+          ),
         ),
       ),
     );
