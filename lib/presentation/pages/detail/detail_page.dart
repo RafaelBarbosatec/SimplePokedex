@@ -3,7 +3,7 @@ import 'package:cubes/cubes.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_pokedex/core/util/extensions.dart';
 import 'package:simple_pokedex/core/util/hex_color.dart';
-import 'package:simple_pokedex/data/repository/pokemon/model/pokemon.dart';
+import 'package:simple_pokedex/data/repositories/pokemon/model/pokemon.dart';
 import 'package:simple_pokedex/presentation/widgets/pokemon_type_widget.dart';
 
 class DetailPage extends StatelessWidget {

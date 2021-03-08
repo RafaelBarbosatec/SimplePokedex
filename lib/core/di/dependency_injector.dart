@@ -1,6 +1,6 @@
 import 'package:cubes/cubes.dart';
 import 'package:dio/dio.dart';
-import 'package:simple_pokedex/data/repository/pokemon/pokemon_repository.dart';
+import 'package:simple_pokedex/data/repositories/pokemon/pokemon_repository.dart';
 import 'package:simple_pokedex/domain/usercases/home_usercase.dart';
 import 'package:simple_pokedex/presentation/pages/home/home_cube.dart';
 

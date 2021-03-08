@@ -1,6 +1,6 @@
 import 'package:cubes/cubes.dart';
 import 'package:flutter/material.dart';
-import 'package:simple_pokedex/data/repository/pokemon/model/pokemon_type.dart';
+import 'package:simple_pokedex/data/repositories/pokemon/model/pokemon_type.dart';
 import 'package:simple_pokedex/presentation/pages/home/home_cube.dart';
 import 'package:simple_pokedex/presentation/pages/home/widgets/pokemon_type_list_widget.dart';
 

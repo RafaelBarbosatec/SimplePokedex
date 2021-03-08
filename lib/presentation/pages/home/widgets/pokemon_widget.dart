@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_pokedex/core/util/extensions.dart';
-import 'package:simple_pokedex/data/repository/pokemon/model/pokemon.dart';
+import 'package:simple_pokedex/data/repositories/pokemon/model/pokemon.dart';
 import 'package:simple_pokedex/presentation/widgets/pokemon_type_widget.dart';
 
 class PokemonWidget extends StatelessWidget {

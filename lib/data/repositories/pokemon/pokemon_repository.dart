@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:simple_pokedex/data/repository/pokemon/model/pokemon.dart';
-import 'package:simple_pokedex/data/repository/pokemon/model/pokemon_type.dart';
+import 'package:simple_pokedex/data/repositories/pokemon/model/pokemon.dart';
+import 'package:simple_pokedex/data/repositories/pokemon/model/pokemon_type.dart';
 
 class PokemonRepository {
   final Dio _api;

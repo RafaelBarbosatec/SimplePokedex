@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:cubes/cubes.dart';
-import 'package:simple_pokedex/data/repository/pokemon/model/pokemon.dart';
-import 'package:simple_pokedex/data/repository/pokemon/model/pokemon_type.dart';
+import 'package:simple_pokedex/data/repositories/pokemon/model/pokemon.dart';
+import 'package:simple_pokedex/data/repositories/pokemon/model/pokemon_type.dart';
 import 'package:simple_pokedex/domain/usercases/home_usercase.dart';
 
 class HomeCube extends Cube {
