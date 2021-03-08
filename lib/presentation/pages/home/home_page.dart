@@ -1,11 +1,11 @@
 import 'package:cubes/cubes.dart';
 import 'package:flutter/material.dart';
-import 'package:simple_pokedex/pages/detail/detail_page.dart';
-import 'package:simple_pokedex/pages/home/home_cube.dart';
-import 'package:simple_pokedex/pages/home/widgets/header.dart';
-import 'package:simple_pokedex/pages/home/widgets/pokemon_empty.dart';
-import 'package:simple_pokedex/pages/home/widgets/pokemon_item.dart';
-import 'package:simple_pokedex/repository/pokemon/model/pokemon.dart';
+import 'package:simple_pokedex/data/repository/pokemon/model/pokemon.dart';
+import 'package:simple_pokedex/presentation/pages/detail/detail_page.dart';
+import 'package:simple_pokedex/presentation/pages/home/home_cube.dart';
+import 'package:simple_pokedex/presentation/pages/home/widgets/header_home_widget.dart';
+import 'package:simple_pokedex/presentation/pages/home/widgets/not_found_widget.dart';
+import 'package:simple_pokedex/presentation/pages/home/widgets/pokemon_widget.dart';
 
 class HomePage extends CubeWidget<HomeCube> {
   @override
@@ -36,7 +36,7 @@ class HomePage extends CubeWidget<HomeCube> {
   Widget _buildContent(BuildContext context, HomeCube cube) {
     return Column(
       children: <Widget>[
-        Header(),
+        HeaderHomeWidget(),
         SizedBox(
           height: 2,
         ),
@@ -59,7 +59,7 @@ class HomePage extends CubeWidget<HomeCube> {
                 cube.loadPokemonList(loadMore: true);
               }
               final pokemon = list[index];
-              return PokemonItem(
+              return PokemonWidget(
                 pokemon: pokemon,
                 onTap: () => context.goTo(DetailPage(pokemon: pokemon)),
               );
@@ -72,14 +72,17 @@ class HomePage extends CubeWidget<HomeCube> {
 
   Widget _buildProgress(HomeCube cube) {
     return cube.progress.build<bool>(
-      (show) => show ? Center(child: CircularProgressIndicator()) : SizedBox.shrink(),
+      (show) => genericCondition<Widget>(
+        condition: show,
+        match: Center(child: CircularProgressIndicator()),
+      ),
       animate: true,
     );
   }
 
   Widget _buildEmpty(HomeCube cube) {
     return cube.showEmpty.build<bool>(
-      (show) => show ? PokemonEmpty() : SizedBox.shrink(),
+      (show) => genericCondition(condition: show, match: NotFoundWidget()),
       animate: true,
     );
   }

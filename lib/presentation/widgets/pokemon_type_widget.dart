@@ -1,16 +1,16 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:simple_pokedex/repository/pokemon/model/pokemon_type.dart';
-import 'package:simple_pokedex/util/hex_color.dart';
+import 'package:simple_pokedex/core/util/hex_color.dart';
+import 'package:simple_pokedex/data/repository/pokemon/model/pokemon_type.dart';
 
-class TypeItem extends StatelessWidget {
+class PokemonTypeWidget extends StatelessWidget {
   final PokemonType type;
   final bool selected;
   final GestureTapCallback onTap;
   final double size;
   final EdgeInsetsGeometry margin;
 
-  const TypeItem(
+  const PokemonTypeWidget(
       {Key key,
       this.type,
       this.selected = false,

@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:simple_pokedex/repository/pokemon/model/pokemon.dart';
-import 'package:simple_pokedex/repository/pokemon/model/pokemon_type.dart';
+import 'package:simple_pokedex/data/repository/pokemon/model/pokemon.dart';
+import 'package:simple_pokedex/data/repository/pokemon/model/pokemon_type.dart';
 
 class PokemonRepository {
   final Dio _api;
@@ -20,15 +20,18 @@ class PokemonRepository {
     if (name != null && name.isNotEmpty) params['name'] = name;
     if (type != null) params['type'] = type;
 
-    return _api
-        .get('pokemon', queryParameters: params)
-        .then((response) => response.data['data'].map<Pokemon>((item) => Pokemon.fromJson(item)).toList());
+    return _api.get('pokemon', queryParameters: params).then((response) =>
+        response.data['data']
+            .map<Pokemon>((item) => Pokemon.fromJson(item))
+            .toList());
   }
 
   Future<List<PokemonType>> getPokemonTypes() {
     if (cacheTypes != null) return Future.value(cacheTypes);
     return _api.get('pokemon/types').then((response) {
-      cacheTypes = response.data['data'].map<PokemonType>((item) => PokemonType.fromJson(item)).toList();
+      cacheTypes = response.data['data']
+          .map<PokemonType>((item) => PokemonType.fromJson(item))
+          .toList();
       return cacheTypes;
     });
   }

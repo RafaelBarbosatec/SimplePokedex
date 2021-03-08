@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:simple_pokedex/pages/home/widgets/type_item.dart';
-import 'package:simple_pokedex/repository/pokemon/model/pokemon_type.dart';
+import 'package:simple_pokedex/data/repository/pokemon/model/pokemon_type.dart';
+import 'package:simple_pokedex/presentation/widgets/pokemon_type_widget.dart';
 
-class PokemonTypeList extends StatelessWidget {
+class PokemonTypeListWidget extends StatelessWidget {
   final List<PokemonType> types;
   final Function(PokemonType) onTypeSelected;
   final PokemonType selected;
 
-  const PokemonTypeList({Key key, this.types, this.onTypeSelected, this.selected}) : super(key: key);
+  const PokemonTypeListWidget(
+      {Key key, this.types, this.onTypeSelected, this.selected})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -17,7 +19,7 @@ class PokemonTypeList extends StatelessWidget {
         itemCount: types.length,
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
-          return TypeItem(
+          return PokemonTypeWidget(
             margin: const EdgeInsets.only(right: 12),
             type: types[index],
             selected: types[index] == selected,

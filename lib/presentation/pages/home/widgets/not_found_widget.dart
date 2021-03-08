@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class PokemonEmpty extends StatelessWidget {
+class NotFoundWidget extends StatelessWidget {
   final String msg;
 
-  const PokemonEmpty({Key key, this.msg = "Not found"}) : super(key: key);
+  const NotFoundWidget({Key key, this.msg = "Not found"}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Center(

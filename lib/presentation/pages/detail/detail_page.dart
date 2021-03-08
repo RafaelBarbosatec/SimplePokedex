@@ -1,10 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cubes/cubes.dart';
 import 'package:flutter/material.dart';
-import 'package:simple_pokedex/pages/home/widgets/type_item.dart';
-import 'package:simple_pokedex/repository/pokemon/model/pokemon.dart';
-import 'package:simple_pokedex/util/hex_color.dart';
-import 'package:simple_pokedex/util/extensions.dart';
+import 'package:simple_pokedex/core/util/extensions.dart';
+import 'package:simple_pokedex/core/util/hex_color.dart';
+import 'package:simple_pokedex/data/repository/pokemon/model/pokemon.dart';
+import 'package:simple_pokedex/presentation/widgets/pokemon_type_widget.dart';
 
 class DetailPage extends StatelessWidget {
   final Pokemon pokemon;
@@ -46,7 +46,8 @@ class DetailPage extends StatelessWidget {
                     color: Colors.white,
                     child: Container(
                       width: double.maxFinite,
-                      padding: EdgeInsets.only(top: 100, left: 15, right: 15, bottom: 15),
+                      padding: EdgeInsets.only(
+                          top: 100, left: 15, right: 15, bottom: 15),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisSize: MainAxisSize.min,
@@ -61,7 +62,8 @@ class DetailPage extends StatelessWidget {
                           SizedBox(
                             height: 20,
                           ),
-                          pokemon.description.body(context, textAlign: TextAlign.center),
+                          pokemon.description
+                              .body(context, textAlign: TextAlign.center),
                           SizedBox(
                             height: 10,
                           ),
@@ -114,7 +116,7 @@ class DetailPage extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: pokemon.typeObjects.map<Widget>((type) {
-        return TypeItem(
+        return PokemonTypeWidget(
           margin: const EdgeInsets.only(left: 6, right: 6),
           type: type,
           selected: true,
@@ -134,19 +136,22 @@ class DetailPage extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
-          _buildLabelAndName(context, Cubes.getString('weight'), pokemon.weight.toString()),
+          _buildLabelAndName(
+              context, Cubes.getString('weight'), pokemon.weight.toString()),
           Container(
             width: 1,
             color: Colors.white.withOpacity(0.5),
             height: 35,
           ),
-          _buildLabelAndName(context, Cubes.getString('height'), pokemon.height.toString()),
+          _buildLabelAndName(
+              context, Cubes.getString('height'), pokemon.height.toString()),
           Container(
             width: 1,
             color: Colors.white.withOpacity(0.5),
             height: 35,
           ),
-          _buildLabelAndName(context, Cubes.getString('abilities'), pokemon.abilities.toString()),
+          _buildLabelAndName(context, Cubes.getString('abilities'),
+              pokemon.abilities.toString()),
         ],
       ),
     );
@@ -179,7 +184,7 @@ class DetailPage extends StatelessWidget {
         Row(
           mainAxisSize: MainAxisSize.min,
           children: pokemon.weaknessObjects.map<Widget>((type) {
-            return TypeItem(
+            return PokemonTypeWidget(
               margin: const EdgeInsets.only(left: 6, right: 6),
               type: type,
               selected: true,

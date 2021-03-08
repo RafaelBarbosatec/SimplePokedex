@@ -1,17 +1,17 @@
 import 'package:cubes/cubes.dart';
 import 'package:flutter/material.dart';
-import 'package:simple_pokedex/pages/home/home_cube.dart';
-import 'package:simple_pokedex/pages/home/widgets/pokemon_type_list.dart';
-import 'package:simple_pokedex/repository/pokemon/model/pokemon_type.dart';
+import 'package:simple_pokedex/data/repository/pokemon/model/pokemon_type.dart';
+import 'package:simple_pokedex/presentation/pages/home/home_cube.dart';
+import 'package:simple_pokedex/presentation/pages/home/widgets/pokemon_type_list_widget.dart';
 
-class Header extends StatefulWidget {
-  const Header({Key key}) : super(key: key);
+class HeaderHomeWidget extends StatefulWidget {
+  const HeaderHomeWidget({Key key}) : super(key: key);
 
   @override
-  _HeaderState createState() => _HeaderState();
+  _HeaderHomeWidgetState createState() => _HeaderHomeWidgetState();
 }
 
-class _HeaderState extends State<Header> {
+class _HeaderHomeWidgetState extends State<HeaderHomeWidget> {
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -26,7 +26,10 @@ class _HeaderState extends State<Header> {
                 padding: const EdgeInsets.only(left: 16.0, top: 20),
                 child: Text(
                   'SimplePokedex',
-                  style: Theme.of(context).textTheme.headline6.copyWith(color: Colors.grey[700]),
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline6
+                      .copyWith(color: Colors.grey[700]),
                 ),
               ),
               Padding(
@@ -52,9 +55,12 @@ class _HeaderState extends State<Header> {
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: TextField(
-                  onChanged: (name) => Cubes.of<HomeCube>(context).didSearchPerName(name),
+                  onChanged: (name) =>
+                      Cubes.of<HomeCube>(context).didSearchPerName(name),
                   decoration: InputDecoration(
-                      border: InputBorder.none, focusedBorder: InputBorder.none, hintText: Cubes.getString('search')),
+                      border: InputBorder.none,
+                      focusedBorder: InputBorder.none,
+                      hintText: Cubes.getString('search')),
                 ),
               ),
             ),
@@ -78,7 +84,7 @@ class _HeaderState extends State<Header> {
           return AnimatedOpacity(
             duration: Duration(milliseconds: 300),
             opacity: types.isEmpty ? 0 : 1,
-            child: PokemonTypeList(
+            child: PokemonTypeListWidget(
               types: types,
               selected: selected,
               onTypeSelected: (type) => cube.didSelectType(type),

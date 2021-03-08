@@ -1,14 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:simple_pokedex/pages/home/widgets/type_item.dart';
-import 'package:simple_pokedex/repository/pokemon/model/pokemon.dart';
-import 'package:simple_pokedex/util/extensions.dart';
+import 'package:simple_pokedex/core/util/extensions.dart';
+import 'package:simple_pokedex/data/repository/pokemon/model/pokemon.dart';
+import 'package:simple_pokedex/presentation/widgets/pokemon_type_widget.dart';
 
-class PokemonItem extends StatelessWidget {
+class PokemonWidget extends StatelessWidget {
   final Pokemon pokemon;
   final GestureTapCallback onTap;
 
-  const PokemonItem({Key key, this.pokemon, this.onTap}) : super(key: key);
+  const PokemonWidget({Key key, this.pokemon, this.onTap}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -72,7 +72,7 @@ class PokemonItem extends StatelessWidget {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: pokemon.typeObjects.map<Widget>((type) {
-        return TypeItem(
+        return PokemonTypeWidget(
           margin: const EdgeInsets.only(right: 12),
           type: type,
           selected: true,

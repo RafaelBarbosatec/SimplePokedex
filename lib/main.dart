@@ -1,10 +1,10 @@
 import 'package:cubes/cubes.dart';
 import 'package:flutter/material.dart';
-import 'package:simple_pokedex/di/dependency_injector.dart';
-import 'package:simple_pokedex/pages/home/home_page.dart';
+import 'package:simple_pokedex/core/di/dependency_injector.dart';
+import 'package:simple_pokedex/presentation/pages/home/home_page.dart';
 
 void main() {
-  injectDependencies();
+  DI.inject();
   runApp(MyApp());
 }
 
