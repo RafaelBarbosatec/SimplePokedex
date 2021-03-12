@@ -28,7 +28,7 @@ class NotFoundWidget extends StatelessWidget {
               msg,
               style: Theme.of(context)
                   .textTheme
-                  .title
+                  .headline6
                   .copyWith(color: Colors.grey[500]),
             ),
           ),

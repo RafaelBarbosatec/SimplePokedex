@@ -150,8 +150,11 @@ class DetailPage extends StatelessWidget {
             color: Colors.white.withOpacity(0.5),
             height: 35,
           ),
-          _buildLabelAndName(context, Cubes.getString('abilities'),
-              pokemon.abilities.toString()),
+          _buildLabelAndName(
+            context,
+            Cubes.getString('abilities'),
+            pokemon.abilities.toString(),
+          ),
         ],
       ),
     );

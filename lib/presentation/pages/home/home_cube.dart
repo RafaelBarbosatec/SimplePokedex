@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:cubes/cubes.dart';
 import 'package:simple_pokedex/data/repositories/pokemon/model/pokemon.dart';
 import 'package:simple_pokedex/data/repositories/pokemon/model/pokemon_type.dart';
-import 'package:simple_pokedex/domain/usercases/home_usercase.dart';
+import 'package:simple_pokedex/domain/usercases/home/home_usercase.dart';
 
 class HomeCube extends Cube {
   static const int LIMIT = 15;
@@ -13,13 +13,12 @@ class HomeCube extends Cube {
 
   final HomeUserCase _userCase;
 
-  final progress = ObservableValue<bool>(value: false);
-  final showEmpty = ObservableValue<bool>(value: false);
-  final typeSelected = ObservableValue<PokemonType>();
-  final pokemonList = ObservableList<Pokemon>(value: []);
-  final pokemonTypeList = ObservableList<PokemonType>(value: []);
-  final snackBarControl =
-      ObservableValue<CFeedBackControl<String>>(value: CFeedBackControl());
+  final progress = false.obsValue;
+  final showEmpty = false.obsValue;
+  final typeSelected = PokemonType().obsValue;
+  final pokemonList = List<Pokemon>().obsValue;
+  final pokemonTypeList = List<PokemonType>().obsValue;
+  final snackBarControl = CFeedBackControl<String>().obsValue;
 
   bool get canLoadMore => pokemonList.length % LIMIT == 0;
 
