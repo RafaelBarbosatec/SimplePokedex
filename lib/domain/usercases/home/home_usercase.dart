@@ -1,15 +1,19 @@
+import 'dart:async';
+
 import 'package:simple_pokedex/core/util/extensions.dart';
 import 'package:simple_pokedex/data/repositories/pokemon/model/pokemon.dart';
-import 'package:simple_pokedex/data/repositories/pokemon/model/pokemon_type.dart';
 import 'package:simple_pokedex/data/repositories/pokemon/pokemon_repository.dart';
+import 'package:simple_pokedex/data/repositories/pokemon_type/model/pokemon_type.dart';
+import 'package:simple_pokedex/data/repositories/pokemon_type/pokemon_type_repository.dart';
 
 class HomeUserCase {
-  final PokemonRepository _repository;
+  final PokemonRepository _pokemonRepository;
+  final PokemonTypeRepository _typeRepository;
 
-  HomeUserCase(this._repository);
+  HomeUserCase(this._pokemonRepository, this._typeRepository);
 
   Future<List<PokemonType>> getPokemonTypes() {
-    return _repository.getPokemonTypes();
+    return _typeRepository.getPokemonTypes();
   }
 
   Future<List<Pokemon>> getPokemonList({
@@ -18,13 +22,12 @@ class HomeUserCase {
     String name,
     String type,
   }) async {
-    final pokemonList = await _repository.getPokemonList(
-      page: page,
-      name: name,
-      type: type,
-      limit: limit,
-    );
+    return _pokemonRepository
+        .getPokemonList(page: page, name: name, type: type, limit: limit)
+        .then(_mapPokemonList);
+  }
 
+  FutureOr<List<Pokemon>> _mapPokemonList(List<Pokemon> pokemonList) async {
     if (pokemonList != null) {
       final typeList = await getPokemonTypes();
       return _mapTypeInList(

@@ -1,6 +1,7 @@
 import 'package:cubes/cubes.dart';
 import 'package:dio/dio.dart';
 import 'package:simple_pokedex/data/repositories/pokemon/pokemon_repository.dart';
+import 'package:simple_pokedex/data/repositories/pokemon_type/pokemon_type_repository.dart';
 import 'package:simple_pokedex/domain/usercases/home/home_usercase.dart';
 import 'package:simple_pokedex/presentation/pages/home/home_cube.dart';
 
@@ -12,7 +13,12 @@ class DI {
 
   static void _injectCubes() {
     Cubes.registerDependency((i) => HomeCube(i.getDependency()));
-    Cubes.registerDependency((i) => HomeUserCase(i.getDependency()));
+    Cubes.registerDependency(
+      (i) => HomeUserCase(
+        i.getDependency(),
+        i.getDependency(),
+      ),
+    );
   }
 
   static void _injectUtils() {
@@ -22,6 +28,10 @@ class DI {
     );
     Cubes.registerDependency(
       (i) => PokemonRepository(i.getDependency()),
+      isSingleton: true,
+    );
+    Cubes.registerDependency(
+      (i) => PokemonTypeRepository(i.getDependency()),
       isSingleton: true,
     );
   }

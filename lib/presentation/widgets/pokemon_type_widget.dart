@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_pokedex/core/util/hex_color.dart';
-import 'package:simple_pokedex/data/repositories/pokemon/model/pokemon_type.dart';
+import 'package:simple_pokedex/data/repositories/pokemon_type/model/pokemon_type.dart';
 
 class PokemonTypeWidget extends StatelessWidget {
   final PokemonType type;
