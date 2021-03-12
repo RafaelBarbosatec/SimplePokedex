@@ -30,7 +30,7 @@ class HomeCube extends Cube {
 
   void didSelectType(PokemonType type) {
     typeSelected.update(type);
-    loadPokemonList();
+    loadPokemonList(pokemonType: type);
   }
 
   void didSearchPerName(String name) {
@@ -42,6 +42,7 @@ class HomeCube extends Cube {
   void loadPokemonList({
     bool loadMore = false,
     String pokemonName,
+    PokemonType pokemonType,
   }) async {
     if (progress.value || (loadMore && !canLoadMore)) return;
 
@@ -59,7 +60,7 @@ class HomeCube extends Cube {
         .getPokemonList(
           page: page,
           name: pokemonName,
-          type: typeSelected?.value?.name,
+          type: pokemonType?.name,
           limit: LIMIT,
         )
         .then((value) => _onResponse(value, loadMore))
