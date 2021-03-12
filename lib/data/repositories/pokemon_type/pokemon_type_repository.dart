@@ -1,9 +1,9 @@
-import 'package:dio/dio.dart';
+import 'package:simple_pokedex/core/data/network/network_client.dart';
 
 import 'model/pokemon_type.dart';
 
 class PokemonTypeRepository {
-  final Dio _api;
+  final NetworkClient _api;
 
   List<PokemonType> cacheTypes;
   PokemonTypeRepository(this._api);
