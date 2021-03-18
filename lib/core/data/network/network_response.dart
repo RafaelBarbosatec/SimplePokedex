@@ -19,9 +19,11 @@ class NetworkResponse<T> {
   /// We are more concerned about `data` field.
   @override
   String toString() {
+    String body;
     if (data is Map) {
-      return json.encode(data);
+      body = json.encode(data);
     }
-    return data.toString();
+    body = data.toString();
+    return 'NetworkResponse{statusCode: $statusCode body:$body headers: $headers }';
   }
 }

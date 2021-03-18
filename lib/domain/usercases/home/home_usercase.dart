@@ -21,7 +21,7 @@ class HomeUserCase {
     int limit = 20,
     String name,
     String type,
-  }) async {
+  }) {
     return _pokemonRepository
         .getPokemonList(page: page, name: name, type: type, limit: limit)
         .then(_mapPokemonList);

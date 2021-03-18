@@ -16,8 +16,8 @@ class HomeCube extends Cube {
   final progress = false.obsValue;
   final showEmpty = false.obsValue;
   final typeSelected = PokemonType().obsValue;
-  final pokemonList = List<Pokemon>().obsValue;
-  final pokemonTypeList = List<PokemonType>().obsValue;
+  final pokemonList = <Pokemon>[].obsValue;
+  final pokemonTypeList = <PokemonType>[].obsValue;
   final snackBarControl = CFeedBackControl<String>().obsValue;
 
   bool get canLoadMore => pokemonList.length % LIMIT == 0;
