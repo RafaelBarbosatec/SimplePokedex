@@ -7,9 +7,13 @@ class PokemonTypeListWidget extends StatelessWidget {
   final Function(PokemonType) onTypeSelected;
   final PokemonType selected;
 
-  const PokemonTypeListWidget(
-      {Key key, this.types, this.onTypeSelected, this.selected})
-      : super(key: key);
+  const PokemonTypeListWidget({
+    Key key,
+    this.types,
+    this.onTypeSelected,
+    this.selected,
+  }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Container(

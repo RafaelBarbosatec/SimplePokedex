@@ -41,9 +41,7 @@ class HomePage extends StatelessWidget {
     return Column(
       children: <Widget>[
         HeaderHomeWidget(),
-        SizedBox(
-          height: 2,
-        ),
+        SizedBox(height: 2),
         _buildPokemonList(cube)
       ],
     );

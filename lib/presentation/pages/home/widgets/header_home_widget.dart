@@ -4,16 +4,12 @@ import 'package:simple_pokedex/data/repositories/pokemon_type/model/pokemon_type
 import 'package:simple_pokedex/presentation/pages/home/home_cube.dart';
 import 'package:simple_pokedex/presentation/pages/home/widgets/pokemon_type_list_widget.dart';
 
-class HeaderHomeWidget extends StatefulWidget {
+class HeaderHomeWidget extends StatelessWidget {
   const HeaderHomeWidget({Key key}) : super(key: key);
 
   @override
-  _HeaderHomeWidgetState createState() => _HeaderHomeWidgetState();
-}
-
-class _HeaderHomeWidgetState extends State<HeaderHomeWidget> {
-  @override
   Widget build(BuildContext context) {
+    HomeCube homeCube = Cubes.of<HomeCube>(context);
     return Card(
       margin: EdgeInsets.only(),
       elevation: 4,
@@ -55,12 +51,12 @@ class _HeaderHomeWidgetState extends State<HeaderHomeWidget> {
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: TextField(
-                  onChanged: (name) =>
-                      Cubes.of<HomeCube>(context).didSearchPerName(name),
+                  onChanged: (name) => homeCube.didSearchPerName(name),
                   decoration: InputDecoration(
-                      border: InputBorder.none,
-                      focusedBorder: InputBorder.none,
-                      hintText: Cubes.getString('search')),
+                    border: InputBorder.none,
+                    focusedBorder: InputBorder.none,
+                    hintText: Cubes.getString('search'),
+                  ),
                 ),
               ),
             ),
@@ -68,7 +64,7 @@ class _HeaderHomeWidgetState extends State<HeaderHomeWidget> {
           SizedBox(
             height: 10,
           ),
-          _buildTypes(Cubes.of(context)),
+          _buildTypes(homeCube),
           SizedBox(
             height: 10,
           ),
@@ -79,19 +75,17 @@ class _HeaderHomeWidgetState extends State<HeaderHomeWidget> {
 
   Widget _buildTypes(HomeCube cube) {
     return cube.typeSelected.build<PokemonType>((selected) {
-      return cube.pokemonTypeList.build<List<PokemonType>>(
-        (types) {
-          return AnimatedOpacity(
-            duration: Duration(milliseconds: 300),
-            opacity: types.isEmpty ? 0 : 1,
-            child: PokemonTypeListWidget(
-              types: types,
-              selected: selected,
-              onTypeSelected: (type) => cube.didSelectType(type),
-            ),
-          );
-        },
-      );
+      return cube.pokemonTypeList.build<List<PokemonType>>((types) {
+        return AnimatedOpacity(
+          duration: Duration(milliseconds: 300),
+          opacity: types.isEmpty ? 0 : 1,
+          child: PokemonTypeListWidget(
+            types: types,
+            selected: selected,
+            onTypeSelected: (type) => cube.didSelectType(type),
+          ),
+        );
+      });
     });
   }
 }

@@ -9,6 +9,7 @@ class PokemonWidget extends StatelessWidget {
   final GestureTapCallback onTap;
 
   const PokemonWidget({Key key, this.pokemon, this.onTap}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Card(
