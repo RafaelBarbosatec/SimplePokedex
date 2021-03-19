@@ -5,6 +5,7 @@ import 'package:simple_pokedex/data/repositories/pokemon/model/pokemon.dart';
 import 'package:simple_pokedex/data/repositories/pokemon/pokemon_repository.dart';
 import 'package:simple_pokedex/data/repositories/pokemon_type/model/pokemon_type.dart';
 import 'package:simple_pokedex/data/repositories/pokemon_type/pokemon_type_repository.dart';
+import 'package:simple_pokedex/domain/entities/home_entity.dart';
 
 class HomeUserCase {
   final PokemonRepository _pokemonRepository;
@@ -12,38 +13,31 @@ class HomeUserCase {
 
   HomeUserCase(this._pokemonRepository, this._typeRepository);
 
-  Future<List<PokemonType>> getPokemonTypes() {
-    return _typeRepository.getPokemonTypes();
-  }
-
-  Future<List<Pokemon>> getPokemonList({
+  Future<HomeEntity> fetchHome({
     int page = 0,
     int limit = 20,
     String name,
     String type,
-  }) {
-    return _pokemonRepository
-        .getPokemonList(page: page, name: name, type: type, limit: limit)
-        .then(_mapPokemonList);
-  }
+  }) async {
+    List<PokemonType> typeList = await _typeRepository.getPokemonTypes();
 
-  FutureOr<List<Pokemon>> _mapPokemonList(List<Pokemon> pokemonList) async {
-    if (pokemonList != null) {
-      final typeList = await getPokemonTypes();
-      return _mapTypeInList(
+    List<Pokemon> pokemonList = await _pokemonRepository
+        .getPokemonList(page: page, name: name, type: type, limit: limit)
+        .then((response) => _mapTypeInList(response, typeList));
+
+    return Future.value(
+      HomeEntity(
         pokemonList: pokemonList,
         pokemonTypeList: typeList,
-      );
-    } else {
-      return [];
-    }
+      ),
+    );
   }
 
-  List<Pokemon> _mapTypeInList({
+  List<Pokemon> _mapTypeInList(
     List<Pokemon> pokemonList,
     List<PokemonType> pokemonTypeList,
-  }) {
-    pokemonList.forEach((p) {
+  ) {
+    pokemonList?.forEach((p) {
       p.typeObjects = pokemonTypeList?.where((t) {
         return p.type.contains(t.name);
       })?.toList();

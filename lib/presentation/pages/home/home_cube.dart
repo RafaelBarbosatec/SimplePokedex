@@ -1,8 +1,7 @@
-import 'dart:async';
-
 import 'package:cubes/cubes.dart';
 import 'package:simple_pokedex/data/repositories/pokemon/model/pokemon.dart';
 import 'package:simple_pokedex/data/repositories/pokemon_type/model/pokemon_type.dart';
+import 'package:simple_pokedex/domain/entities/home_entity.dart';
 import 'package:simple_pokedex/domain/usercases/home/home_usercase.dart';
 
 class HomeCube extends Cube {
@@ -51,16 +50,13 @@ class HomeCube extends Cube {
 
     if (showEmpty.value) showEmpty.update(false);
     if (!progress.value) progress.update(true);
-
-    if (pokemonTypeList.isEmpty) {
-      await _loadPokemonTypes();
-    }
+    if (!loadMore) pokemonList.clear();
 
     _userCase
-        .getPokemonList(
+        .fetchHome(
           page: page,
           name: pokemonName,
-          type: pokemonType?.name,
+          type: (pokemonType ?? typeSelected.value)?.name,
           limit: LIMIT,
         )
         .then((value) => _onResponse(value, loadMore))
@@ -68,21 +64,12 @@ class HomeCube extends Cube {
         .whenComplete(() => progress.update(false));
   }
 
-  Future<void> _loadPokemonTypes() async {
-    try {
-      final typeList = await _userCase.getPokemonTypes();
-      pokemonTypeList.update(typeList);
-      return Future.value();
-    } catch (e) {
-      return Future.value();
-    }
-  }
-
-  void _onResponse(List<Pokemon> event, bool loadMore) {
+  void _onResponse(HomeEntity event, bool loadMore) {
+    pokemonTypeList.update(event.pokemonTypeList);
     if (loadMore) {
-      pokemonList.addAll(event);
+      pokemonList.addAll(event.pokemonList);
     } else {
-      pokemonList.update(event);
+      pokemonList.update(event.pokemonList);
       showEmpty.update(pokemonList.value.isEmpty);
     }
   }
