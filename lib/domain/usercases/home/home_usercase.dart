@@ -5,7 +5,7 @@ import 'package:simple_pokedex/data/repositories/pokemon/model/pokemon.dart';
 import 'package:simple_pokedex/data/repositories/pokemon/pokemon_repository.dart';
 import 'package:simple_pokedex/data/repositories/pokemon_type/model/pokemon_type.dart';
 import 'package:simple_pokedex/data/repositories/pokemon_type/pokemon_type_repository.dart';
-import 'package:simple_pokedex/domain/entities/home_entity.dart';
+import 'package:simple_pokedex/domain/entities/home/home_entity.dart';
 
 class HomeUserCase {
   final PokemonRepository _pokemonRepository;
@@ -16,8 +16,8 @@ class HomeUserCase {
   Future<HomeEntity> fetchHome({
     int page = 0,
     int limit = 20,
-    String name,
-    String type,
+    String? name,
+    String? type,
   }) async {
     List<PokemonType> typeList = await _typeRepository.getPokemonTypes();
 
@@ -35,15 +35,15 @@ class HomeUserCase {
 
   List<Pokemon> _mapTypeInList(
     List<Pokemon> pokemonList,
-    List<PokemonType> pokemonTypeList,
+    List<PokemonType>? pokemonTypeList,
   ) {
-    pokemonList?.forEach((p) {
+    pokemonList.forEach((p) {
       p.typeObjects = pokemonTypeList?.where((t) {
-        return p.type.contains(t.name);
-      })?.toList();
+        return p.type?.contains(t.name) ?? false;
+      }).toList();
       p.weaknessObjects = pokemonTypeList?.where((t) {
-        return p.weakness.contains(t.name.fistLetterUpperCase());
-      })?.toList();
+        return p.weakness?.contains(t.name?.fistLetterUpperCase()) ?? false;
+      }).toList();
     });
     return pokemonList;
   }

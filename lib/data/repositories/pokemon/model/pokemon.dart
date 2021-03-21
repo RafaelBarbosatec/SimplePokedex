@@ -1,23 +1,23 @@
 import 'package:simple_pokedex/data/repositories/pokemon_type/model/pokemon_type.dart';
 
 class Pokemon {
-  List<String> abilities;
-  String detailPageURL;
-  double weight;
-  List<String> weakness;
-  String number;
-  int height;
-  String collectiblesSlug;
-  String featured;
-  String slug;
-  String description;
-  String name;
-  String thumbnailAltText;
-  String thumbnailImage;
-  int id;
-  List<String> type;
-  List<PokemonType> typeObjects;
-  List<PokemonType> weaknessObjects = List();
+  List<String>? abilities;
+  String? detailPageURL;
+  double? weight;
+  List<String>? weakness;
+  String? number;
+  int? height;
+  String? collectiblesSlug;
+  String? featured;
+  String? slug;
+  String? description;
+  String? name;
+  String? thumbnailAltText;
+  String? thumbnailImage;
+  int? id;
+  List<String>? type;
+  List<PokemonType>? typeObjects;
+  List<PokemonType>? weaknessObjects = [];
 
   Pokemon(
       {this.abilities,

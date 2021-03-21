@@ -9,10 +9,10 @@ import 'package:simple_pokedex/presentation/widgets/pokemon_type_widget.dart';
 class DetailPage extends StatelessWidget {
   final Pokemon pokemon;
 
-  const DetailPage({Key key, this.pokemon}) : super(key: key);
+  const DetailPage({Key? key, required this.pokemon}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    Color colorBg = HexColor(pokemon.typeObjects.first.color);
+    Color colorBg = HexColor(pokemon.typeObjects?.first.color);
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -28,7 +28,7 @@ class DetailPage extends StatelessWidget {
         backgroundColor: Colors.transparent,
         appBar: AppBar(
           centerTitle: true,
-          title: pokemon.name.title(context, color: Colors.white),
+          title: pokemon.name?.title(context, color: Colors.white),
           elevation: 0,
           backgroundColor: Colors.transparent,
         ),
@@ -53,7 +53,7 @@ class DetailPage extends StatelessWidget {
                         mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
                           Center(
-                            child: pokemon.name.title(context),
+                            child: pokemon.name?.title(context),
                           ),
                           SizedBox(
                             height: 10,
@@ -62,8 +62,9 @@ class DetailPage extends StatelessWidget {
                           SizedBox(
                             height: 20,
                           ),
-                          pokemon.description
-                              .body(context, textAlign: TextAlign.center),
+                          pokemon.description?.body(context,
+                                  textAlign: TextAlign.center) ??
+                              SizedBox.shrink(),
                           SizedBox(
                             height: 10,
                           ),
@@ -88,9 +89,9 @@ class DetailPage extends StatelessWidget {
                   child: Container(
                     height: 200,
                     child: Hero(
-                      tag: pokemon.thumbnailImage,
+                      tag: pokemon.thumbnailImage ?? '',
                       child: CachedNetworkImage(
-                        imageUrl: pokemon.thumbnailImage,
+                        imageUrl: pokemon.thumbnailImage ?? '',
                         placeholder: (context, url) => Padding(
                           padding: EdgeInsets.all(20),
                           child: Image.asset(
@@ -115,14 +116,15 @@ class DetailPage extends StatelessWidget {
     }
     return Row(
       mainAxisSize: MainAxisSize.min,
-      children: pokemon.typeObjects.map<Widget>((type) {
-        return PokemonTypeWidget(
-          margin: const EdgeInsets.only(left: 6, right: 6),
-          type: type,
-          selected: true,
-          size: 30,
-        );
-      }).toList(),
+      children: pokemon.typeObjects?.map<Widget>((type) {
+            return PokemonTypeWidget(
+              margin: const EdgeInsets.only(left: 6, right: 6),
+              type: type,
+              selected: true,
+              size: 30,
+            );
+          }).toList() ??
+          [],
     );
   }
 
@@ -184,14 +186,15 @@ class DetailPage extends StatelessWidget {
         ),
         Row(
           mainAxisSize: MainAxisSize.min,
-          children: pokemon.weaknessObjects.map<Widget>((type) {
-            return PokemonTypeWidget(
-              margin: const EdgeInsets.only(left: 6, right: 6),
-              type: type,
-              selected: true,
-              size: 30,
-            );
-          }).toList(),
+          children: pokemon.weaknessObjects?.map<Widget>((type) {
+                return PokemonTypeWidget(
+                  margin: const EdgeInsets.only(left: 6, right: 6),
+                  type: type,
+                  selected: true,
+                  size: 30,
+                );
+              }).toList() ??
+              [],
         )
       ],
     );

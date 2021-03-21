@@ -5,7 +5,7 @@ import 'model/pokemon_type.dart';
 class PokemonTypeRepository {
   final NetworkClient _api;
 
-  List<PokemonType> cacheTypes;
+  List<PokemonType>? cacheTypes;
   PokemonTypeRepository(this._api);
 
   Future<List<PokemonType>> getPokemonTypes() {
@@ -14,7 +14,7 @@ class PokemonTypeRepository {
       cacheTypes = response.data['data']
           .map<PokemonType>((item) => PokemonType.fromJson(item))
           .toList();
-      return cacheTypes;
+      return cacheTypes ?? [];
     });
   }
 }

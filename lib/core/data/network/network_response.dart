@@ -8,13 +8,13 @@ class NetworkResponse<T> {
   });
 
   /// Response body. may have been transformed, please refer to [ResponseType].
-  T data;
+  T? data;
 
   /// Response headers.
-  Map<String, List<String>> headers;
+  Map<String, List<String>>? headers;
 
   /// Http status code.
-  int statusCode;
+  int? statusCode;
 
   /// We are more concerned about `data` field.
   @override

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class NotFoundWidget extends StatelessWidget {
   final String msg;
 
-  const NotFoundWidget({Key key, this.msg = "Not found"}) : super(key: key);
+  const NotFoundWidget({Key? key, this.msg = "Not found"}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,7 @@ class NotFoundWidget extends StatelessWidget {
               style: Theme.of(context)
                   .textTheme
                   .headline6
-                  .copyWith(color: Colors.grey[500]),
+                  ?.copyWith(color: Colors.grey[500]),
             ),
           ),
         ],

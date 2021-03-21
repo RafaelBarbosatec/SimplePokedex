@@ -4,12 +4,12 @@ import 'package:simple_pokedex/presentation/widgets/pokemon_type_widget.dart';
 
 class PokemonTypeListWidget extends StatelessWidget {
   final List<PokemonType> types;
-  final Function(PokemonType) onTypeSelected;
-  final PokemonType selected;
+  final Function(PokemonType?)? onTypeSelected;
+  final PokemonType? selected;
 
   const PokemonTypeListWidget({
-    Key key,
-    this.types,
+    Key? key,
+    required this.types,
     this.onTypeSelected,
     this.selected,
   }) : super(key: key);

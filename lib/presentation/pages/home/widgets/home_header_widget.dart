@@ -1,15 +1,15 @@
 import 'package:cubes/cubes.dart';
 import 'package:flutter/material.dart';
-import 'package:simple_pokedex/data/repositories/pokemon_type/model/pokemon_type.dart';
 import 'package:simple_pokedex/presentation/pages/home/home_cube.dart';
+import 'package:simple_pokedex/presentation/pages/home/view_model/type_control_view_model.dart';
 import 'package:simple_pokedex/presentation/pages/home/widgets/pokemon_type_list_widget.dart';
 
-class HeaderHomeWidget extends StatelessWidget {
-  const HeaderHomeWidget({Key key}) : super(key: key);
+class HomeHeaderWidget extends StatelessWidget {
+  const HomeHeaderWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    HomeCube homeCube = Cubes.of<HomeCube>(context);
+    HomeCube? homeCube = Cubes.of<HomeCube>(context);
     return Card(
       margin: EdgeInsets.only(),
       elevation: 4,
@@ -25,7 +25,7 @@ class HeaderHomeWidget extends StatelessWidget {
                   style: Theme.of(context)
                       .textTheme
                       .headline6
-                      .copyWith(color: Colors.grey[700]),
+                      ?.copyWith(color: Colors.grey[700]),
                 ),
               ),
               Padding(
@@ -51,7 +51,7 @@ class HeaderHomeWidget extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: TextField(
-                  onChanged: (name) => homeCube.didSearchPerName(name),
+                  onChanged: (name) => homeCube?.didSearchPerName(name),
                   decoration: InputDecoration(
                     border: InputBorder.none,
                     focusedBorder: InputBorder.none,
@@ -64,7 +64,7 @@ class HeaderHomeWidget extends StatelessWidget {
           SizedBox(
             height: 10,
           ),
-          _buildTypes(homeCube),
+          _buildTypes(homeCube) ?? SizedBox.shrink(),
           SizedBox(
             height: 10,
           ),
@@ -73,19 +73,17 @@ class HeaderHomeWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildTypes(HomeCube cube) {
-    return cube.typeSelected.build<PokemonType>((selected) {
-      return cube.pokemonTypeList.build<List<PokemonType>>((types) {
-        return AnimatedOpacity(
-          duration: Duration(milliseconds: 300),
-          opacity: types.isEmpty ? 0 : 1,
-          child: PokemonTypeListWidget(
-            types: types,
-            selected: selected,
-            onTypeSelected: (type) => cube.didSelectType(type),
-          ),
-        );
-      });
+  Widget? _buildTypes(HomeCube? cube) {
+    return cube?.typeViewModel.build<TypeControlViewModel>((typeViewModel) {
+      return AnimatedOpacity(
+        duration: Duration(milliseconds: 300),
+        opacity: typeViewModel.types.isEmpty ? 0 : 1,
+        child: PokemonTypeListWidget(
+          types: typeViewModel.types,
+          selected: typeViewModel.typeSelected,
+          onTypeSelected: (type) => cube.didSelectType(type),
+        ),
+      );
     });
   }
 }

@@ -1,7 +1,7 @@
 class PokemonType {
-  String image;
-  String name;
-  String color;
+  String? image;
+  String? name;
+  String? color;
 
   PokemonType({this.image, this.name, this.color});
 

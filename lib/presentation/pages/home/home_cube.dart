@@ -1,8 +1,9 @@
 import 'package:cubes/cubes.dart';
 import 'package:simple_pokedex/data/repositories/pokemon/model/pokemon.dart';
 import 'package:simple_pokedex/data/repositories/pokemon_type/model/pokemon_type.dart';
-import 'package:simple_pokedex/domain/entities/home_entity.dart';
+import 'package:simple_pokedex/domain/entities/home/home_entity.dart';
 import 'package:simple_pokedex/domain/usercases/home/home_usercase.dart';
+import 'package:simple_pokedex/presentation/pages/home/view_model/type_control_view_model.dart';
 
 class HomeCube extends Cube {
   static const int LIMIT = 15;
@@ -14,21 +15,20 @@ class HomeCube extends Cube {
 
   final progress = false.obsValue;
   final showEmpty = false.obsValue;
-  final typeSelected = PokemonType().obsValue;
+  final typeViewModel = TypeControlViewModel(types: []).obsValue;
   final pokemonList = <Pokemon>[].obsValue;
-  final pokemonTypeList = <PokemonType>[].obsValue;
   final snackBarControl = CFeedBackControl<String>().obsValue;
 
   bool get canLoadMore => pokemonList.length % LIMIT == 0;
 
   @override
-  void onReady(Object argument) {
+  void onReady(Object? argument) {
     loadPokemonList();
     super.onReady(argument);
   }
 
-  void didSelectType(PokemonType type) {
-    typeSelected.update(type);
+  void didSelectType(PokemonType? type) {
+    typeViewModel.modify((value) => value.updateSelected(selected: type));
     loadPokemonList(pokemonType: type);
   }
 
@@ -40,8 +40,8 @@ class HomeCube extends Cube {
 
   void loadPokemonList({
     bool loadMore = false,
-    String pokemonName,
-    PokemonType pokemonType,
+    String? pokemonName,
+    PokemonType? pokemonType,
   }) async {
     if (progress.value || (loadMore && !canLoadMore)) return;
 
@@ -56,7 +56,7 @@ class HomeCube extends Cube {
         .fetchHome(
           page: page,
           name: pokemonName,
-          type: (pokemonType ?? typeSelected.value)?.name,
+          type: (pokemonType ?? typeViewModel.value.typeSelected)?.name,
           limit: LIMIT,
         )
         .then((value) => _onResponse(value, loadMore))
@@ -65,7 +65,9 @@ class HomeCube extends Cube {
   }
 
   void _onResponse(HomeEntity event, bool loadMore) {
-    pokemonTypeList.update(event.pokemonTypeList);
+    typeViewModel.modify(
+      (value) => value.updateList(list: event.pokemonTypeList),
+    );
     if (loadMore) {
       pokemonList.addAll(event.pokemonList);
     } else {

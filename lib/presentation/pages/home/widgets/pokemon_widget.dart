@@ -6,9 +6,10 @@ import 'package:simple_pokedex/presentation/widgets/pokemon_type_widget.dart';
 
 class PokemonWidget extends StatelessWidget {
   final Pokemon pokemon;
-  final GestureTapCallback onTap;
+  final GestureTapCallback? onTap;
 
-  const PokemonWidget({Key key, this.pokemon, this.onTap}) : super(key: key);
+  const PokemonWidget({Key? key, required this.pokemon, this.onTap})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,9 +32,9 @@ class PokemonWidget extends StatelessWidget {
             width: 100,
             height: 100,
             child: Hero(
-              tag: pokemon.thumbnailImage,
+              tag: pokemon.thumbnailImage ?? '',
               child: CachedNetworkImage(
-                imageUrl: pokemon.thumbnailImage,
+                imageUrl: pokemon.thumbnailImage ?? '',
                 placeholder: (context, url) => Padding(
                   padding: EdgeInsets.all(20),
                   child: Image.asset(
@@ -60,7 +61,7 @@ class PokemonWidget extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           '#${pokemon.number}'.body(context, color: Colors.grey),
-          pokemon.name.body(context, fontSize: 18),
+          pokemon.name?.body(context, fontSize: 18) ?? SizedBox.shrink(),
         ],
       ),
     );
@@ -72,14 +73,15 @@ class PokemonWidget extends StatelessWidget {
     }
     return Row(
       mainAxisSize: MainAxisSize.min,
-      children: pokemon.typeObjects.map<Widget>((type) {
-        return PokemonTypeWidget(
-          margin: const EdgeInsets.only(right: 12),
-          type: type,
-          selected: true,
-          size: 30,
-        );
-      }).toList(),
+      children: pokemon.typeObjects?.map<Widget>((type) {
+            return PokemonTypeWidget(
+              margin: const EdgeInsets.only(right: 12),
+              type: type,
+              selected: true,
+              size: 30,
+            );
+          }).toList() ??
+          [],
     );
   }
 }

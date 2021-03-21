@@ -5,5 +5,5 @@ class HomeEntity {
   final List<Pokemon> pokemonList;
   final List<PokemonType> pokemonTypeList;
 
-  HomeEntity({this.pokemonList, this.pokemonTypeList});
+  HomeEntity({required this.pokemonList, required this.pokemonTypeList});
 }

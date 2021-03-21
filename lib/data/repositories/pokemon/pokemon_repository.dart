@@ -1,18 +1,15 @@
 import 'package:simple_pokedex/core/data/network/network_client.dart';
 import 'package:simple_pokedex/data/repositories/pokemon/model/pokemon.dart';
-import 'package:simple_pokedex/data/repositories/pokemon_type/model/pokemon_type.dart';
 
 class PokemonRepository {
   final NetworkClient _api;
-
-  List<PokemonType> cacheTypes;
   PokemonRepository(this._api);
 
   Future<List<Pokemon>> getPokemonList({
     int page = 0,
-    int limit,
-    String name,
-    String type,
+    int? limit,
+    String? name,
+    String? type,
   }) {
     Map<String, dynamic> params = Map();
     params['page'] = page;
