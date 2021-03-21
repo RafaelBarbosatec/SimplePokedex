@@ -4,8 +4,8 @@ import 'package:simple_pokedex/data/repositories/pokemon/model/pokemon.dart';
 import 'package:simple_pokedex/presentation/pages/detail/detail_page.dart';
 import 'package:simple_pokedex/presentation/pages/home/home_cube.dart';
 import 'package:simple_pokedex/presentation/pages/home/widgets/home_header_widget.dart';
-import 'package:simple_pokedex/presentation/pages/home/widgets/not_found_widget.dart';
 import 'package:simple_pokedex/presentation/pages/home/widgets/pokemon_widget.dart';
+import 'package:simple_pokedex/presentation/widgets/not_found_widget.dart';
 
 class HomePage extends StatelessWidget {
   @override
