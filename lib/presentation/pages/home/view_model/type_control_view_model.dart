@@ -2,8 +2,8 @@ import 'package:simple_pokedex/data/repositories/pokemon_type/model/pokemon_type
 
 class TypeControlViewModel {
   final PokemonType? typeSelected;
-
   final List<PokemonType> types;
+
   TypeControlViewModel({this.typeSelected, required this.types});
 
   TypeControlViewModel updateList({
