@@ -3,11 +3,11 @@ import 'package:simple_pokedex/core/data/network/network_client.dart';
 import 'package:simple_pokedex/core/data/network/network_error.dart';
 import 'package:simple_pokedex/core/data/network/network_response.dart';
 
-class DioNetworkClient implements NetworkClient {
-  Dio? _dio;
+class DioNetworkProvider implements NetworkClient {
+  late Dio _dio;
   final String baseUrl;
 
-  DioNetworkClient({required this.baseUrl}) {
+  DioNetworkProvider({required this.baseUrl}) {
     _dio = Dio(BaseOptions(baseUrl: baseUrl));
   }
 
@@ -16,7 +16,7 @@ class DioNetworkClient implements NetworkClient {
     String path, {
     Map<String, dynamic>? queryParameters,
   }) {
-    return _dio!.get(path, queryParameters: queryParameters).then((value) {
+    return _dio.get(path, queryParameters: queryParameters).then((value) {
       return NetworkResponse<T>(
         data: value.data,
         headers: value.headers.map,

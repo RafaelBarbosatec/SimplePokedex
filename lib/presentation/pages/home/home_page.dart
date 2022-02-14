@@ -10,7 +10,7 @@ import 'package:simple_pokedex/presentation/widgets/not_found_widget.dart';
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return CubeBuilder<HomeCube>(
+    return CubeConsumer<HomeCube>(
       builder: (context, HomeCube cube) {
         return Scaffold(
           resizeToAvoidBottomInset: false,

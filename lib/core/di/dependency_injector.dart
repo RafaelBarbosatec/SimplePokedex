@@ -24,16 +24,16 @@ class DI {
 
   static void _injectUtils() {
     Cubes.registerDependency<NetworkClient>(
-      (i) => DioNetworkClient(baseUrl: 'http://104.131.18.84/'),
-      isSingleton: true,
+      (i) => DioNetworkProvider(baseUrl: 'http://104.131.18.84/'),
+      type: DependencyRegisterType.lazySingleton,
     );
     Cubes.registerDependency(
       (i) => PokemonRepository(i.getDependency()),
-      isSingleton: true,
+      type: DependencyRegisterType.lazySingleton,
     );
     Cubes.registerDependency(
       (i) => PokemonTypeRepository(i.getDependency()),
-      isSingleton: true,
+      type: DependencyRegisterType.lazySingleton,
     );
   }
 }
