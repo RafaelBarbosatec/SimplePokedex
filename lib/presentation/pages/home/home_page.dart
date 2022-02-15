@@ -63,7 +63,7 @@ class HomePage extends StatelessWidget {
               final pokemon = list[index];
               return PokemonWidget(
                 pokemon: pokemon,
-                onTap: () => context.goTo(DetailPage(pokemon: pokemon)),
+                onTap: () => context.goTo((_) => DetailPage(pokemon: pokemon)),
               );
             },
           ),
@@ -74,8 +74,7 @@ class HomePage extends StatelessWidget {
 
   Widget _buildProgress(HomeCube cube) {
     return cube.progress.build<bool>(
-      (show) => genericCondition<Widget>(
-        condition: show,
+      (show) => show.conditional(
         match: Center(child: CircularProgressIndicator()),
       ),
       animate: true,
@@ -84,7 +83,7 @@ class HomePage extends StatelessWidget {
 
   Widget _buildEmpty(HomeCube cube) {
     return cube.showEmpty.build<bool>(
-      (show) => genericCondition(condition: show, match: NotFoundWidget()),
+      (show) => show.conditional(match: NotFoundWidget()),
       animate: true,
     );
   }
