@@ -13,27 +13,24 @@ class DI {
   }
 
   static void _injectCubes() {
-    Cubes.putDependency((i) => HomeCube(i.getDependency()));
-    Cubes.putDependency(
+    Cubes.registerFactory((i) => HomeCube(i.get()));
+    Cubes.registerFactory(
       (i) => HomeUserCase(
-        i.getDependency(),
-        i.getDependency(),
+        i.get(),
+        i.get(),
       ),
     );
   }
 
   static void _injectUtils() {
-    Cubes.putDependency<NetworkClient>(
+    Cubes.registerLazySingleton<NetworkClient>(
       (i) => DioNetworkProvider(baseUrl: 'http://104.131.18.84/'),
-      type: DependencyRegisterType.lazySingleton,
     );
-    Cubes.putDependency(
-      (i) => PokemonRepository(i.getDependency()),
-      type: DependencyRegisterType.lazySingleton,
+    Cubes.registerLazySingleton(
+      (i) => PokemonRepository(i.get()),
     );
-    Cubes.putDependency(
-      (i) => PokemonTypeRepository(i.getDependency()),
-      type: DependencyRegisterType.lazySingleton,
+    Cubes.registerLazySingleton(
+      (i) => PokemonTypeRepository(i.get()),
     );
   }
 }

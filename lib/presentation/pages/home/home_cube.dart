@@ -13,11 +13,11 @@ class HomeCube extends Cube {
 
   final HomeUserCase _userCase;
 
-  final progress = false.obsValue;
-  final showEmpty = false.obsValue;
-  final typeViewModel = TypeControlViewModel(types: []).obsValue;
-  final pokemonList = <Pokemon>[].obsValue;
-  final snackBarControl = CFeedBackControl<String>().obsValue;
+  final progress = false.obs;
+  final showEmpty = false.obs;
+  final typeViewModel = TypeControlViewModel(types: []).obs;
+  final pokemonList = <Pokemon>[].obs;
+  final snackBarControl = CFeedBackControl<String>().obs;
 
   bool get canLoadMore => pokemonList.length % LIMIT == 0;
 
