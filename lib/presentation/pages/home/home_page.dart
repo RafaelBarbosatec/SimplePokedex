@@ -7,33 +7,29 @@ import 'package:simple_pokedex/presentation/pages/home/widgets/home_header_widge
 import 'package:simple_pokedex/presentation/pages/home/widgets/pokemon_widget.dart';
 import 'package:simple_pokedex/presentation/widgets/not_found_widget.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends CubeWidget<HomeCube> {
   @override
-  Widget build(BuildContext context) {
-    return CubeConsumer<HomeCube>(
-      builder: (context, HomeCube cube) {
-        return Scaffold(
-          resizeToAvoidBottomInset: false,
-          backgroundColor: Colors.white,
-          body: CFeedBackManager(
-            snackBarControllers: [
-              CSnackBarController<String>(
-                observable: cube.snackBarControl,
-                builder: (value, context) => SnackBar(content: Text(value)),
-              ),
-            ],
-            child: SafeArea(
-              child: Stack(
-                children: <Widget>[
-                  _buildContent(context, cube),
-                  _buildProgress(cube),
-                  _buildEmpty(cube),
-                ],
-              ),
-            ),
+  Widget buildView(BuildContext context, HomeCube cube) {
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      backgroundColor: Colors.white,
+      body: CFeedBackManager(
+        snackBarControllers: [
+          CSnackBarController<String>(
+            observable: cube.snackBarControl,
+            builder: (value, context) => SnackBar(content: Text(value)),
           ),
-        );
-      },
+        ],
+        child: SafeArea(
+          child: Stack(
+            children: <Widget>[
+              _buildContent(context, cube),
+              _buildProgress(cube),
+              _buildEmpty(cube),
+            ],
+          ),
+        ),
+      ),
     );
   }
 
