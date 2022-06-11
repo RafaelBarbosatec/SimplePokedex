@@ -55,7 +55,7 @@ class HomeHeaderWidget extends StatelessWidget {
                   decoration: InputDecoration(
                     border: InputBorder.none,
                     focusedBorder: InputBorder.none,
-                    hintText: Cubes.getString('search'),
+                    hintText: 'Search per name',
                   ),
                 ),
               ),

@@ -5,7 +5,7 @@ import 'package:simple_pokedex/data/repositories/pokemon/model/pokemon.dart';
 import 'package:simple_pokedex/data/repositories/pokemon/pokemon_repository.dart';
 import 'package:simple_pokedex/data/repositories/pokemon_type/model/pokemon_type.dart';
 import 'package:simple_pokedex/data/repositories/pokemon_type/pokemon_type_repository.dart';
-import 'package:simple_pokedex/domain/entities/home/home_entity.dart';
+import 'package:simple_pokedex/presentation/pages/home/home_entity.dart';
 
 class HomeUserCase {
   final PokemonRepository _pokemonRepository;

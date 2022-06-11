@@ -1,8 +1,8 @@
 import 'package:cubes/cubes.dart';
 import 'package:simple_pokedex/data/repositories/pokemon/model/pokemon.dart';
 import 'package:simple_pokedex/data/repositories/pokemon_type/model/pokemon_type.dart';
-import 'package:simple_pokedex/domain/entities/home/home_entity.dart';
-import 'package:simple_pokedex/domain/usercases/home/home_usercase.dart';
+import 'package:simple_pokedex/presentation/pages/home/home_entity.dart';
+import 'package:simple_pokedex/presentation/pages/home/home_usercase.dart';
 import 'package:simple_pokedex/presentation/pages/home/view_model/type_control_view_model.dart';
 
 class HomeCube extends Cube {

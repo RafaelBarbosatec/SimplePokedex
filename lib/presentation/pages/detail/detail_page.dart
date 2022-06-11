@@ -1,5 +1,4 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cubes/cubes.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_pokedex/core/util/extensions.dart';
 import 'package:simple_pokedex/core/util/hex_color.dart';
@@ -139,14 +138,10 @@ class DetailPage extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           _buildLabelAndName(
-              context, Cubes.getString('weight'), pokemon.weight.toString()),
-          Container(
-            width: 1,
-            color: Colors.white.withOpacity(0.5),
-            height: 35,
+            context,
+            'Weight',
+            pokemon.weight.toString(),
           ),
-          _buildLabelAndName(
-              context, Cubes.getString('height'), pokemon.height.toString()),
           Container(
             width: 1,
             color: Colors.white.withOpacity(0.5),
@@ -154,7 +149,17 @@ class DetailPage extends StatelessWidget {
           ),
           _buildLabelAndName(
             context,
-            Cubes.getString('abilities'),
+            'Height',
+            pokemon.height.toString(),
+          ),
+          Container(
+            width: 1,
+            color: Colors.white.withOpacity(0.5),
+            height: 35,
+          ),
+          _buildLabelAndName(
+            context,
+            'Abilities',
             pokemon.abilities.toString(),
           ),
         ],
@@ -180,7 +185,7 @@ class DetailPage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        Cubes.getString('weakness').title(context, fontSize: 16),
+        'Weakness'.title(context, fontSize: 16),
         SizedBox(
           height: 10,
         ),
