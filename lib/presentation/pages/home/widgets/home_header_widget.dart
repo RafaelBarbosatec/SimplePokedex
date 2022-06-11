@@ -1,7 +1,7 @@
 import 'package:cubes/cubes.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_pokedex/presentation/pages/home/home_cube.dart';
-import 'package:simple_pokedex/presentation/pages/home/view_model/type_control_view_model.dart';
+import 'package:simple_pokedex/presentation/pages/home/home_entity.dart';
 import 'package:simple_pokedex/presentation/pages/home/widgets/pokemon_type_list_widget.dart';
 
 class HomeHeaderWidget extends StatelessWidget {
@@ -74,7 +74,7 @@ class HomeHeaderWidget extends StatelessWidget {
   }
 
   Widget? _buildTypes(HomeCube? cube) {
-    return cube?.typeViewModel.build<TypeControlViewModel>((typeViewModel) {
+    return cube?.typeViewModel.build<TypeControlEntity>((typeViewModel) {
       return AnimatedOpacity(
         duration: Duration(milliseconds: 300),
         opacity: typeViewModel.types.isEmpty ? 0 : 1,

@@ -3,7 +3,6 @@ import 'package:simple_pokedex/data/repositories/pokemon/model/pokemon.dart';
 import 'package:simple_pokedex/data/repositories/pokemon_type/model/pokemon_type.dart';
 import 'package:simple_pokedex/presentation/pages/home/home_entity.dart';
 import 'package:simple_pokedex/presentation/pages/home/home_usercase.dart';
-import 'package:simple_pokedex/presentation/pages/home/view_model/type_control_view_model.dart';
 
 class HomeCube extends Cube {
   static const int LIMIT = 15;
@@ -15,7 +14,7 @@ class HomeCube extends Cube {
 
   final progress = false.obs;
   final showEmpty = false.obs;
-  final typeViewModel = TypeControlViewModel(types: []).obs;
+  final typeViewModel = TypeControlEntity(types: []).obs;
   final pokemonList = <Pokemon>[].obs;
   final snackBarControl = CFeedBackControl<String>().obs;
 
