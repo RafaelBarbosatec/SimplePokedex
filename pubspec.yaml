@@ -21,7 +21,7 @@ dependencies:
     sdk: flutter
 
   dio: ^4.0.6
-  cubes: ^1.5.1
+  cubes: ^1.5.2+1
   cached_network_image: ^3.2.1
 
 
