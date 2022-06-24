@@ -1,4 +1,5 @@
 import 'package:cubes/cubes.dart';
+import 'package:simple_pokedex/core/util/actions.dart';
 import 'package:simple_pokedex/data/repositories/pokemon/model/pokemon.dart';
 import 'package:simple_pokedex/data/repositories/pokemon_type/model/pokemon_type.dart';
 import 'package:simple_pokedex/presentation/pages/home/home_entity.dart';
@@ -76,8 +77,6 @@ class HomeCube extends Cube {
   }
 
   void _onError(error) {
-    snackBarControl.modify((value) {
-      return value.copyWith(show: true, data: error.toString());
-    });
+    sendAction(SnackBarAction(error.toString()));
   }
 }
